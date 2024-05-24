@@ -34,7 +34,7 @@ public class Main {
             for(Product i: productArrayList)
                 i.print();
 
-            //----------------------------------------- alePersons------------------------------------------------//
+            //----------------------------------------- SalePersons------------------------------------------------//
 
             Scanner salePersonScanner = new Scanner(new File("src/main/java/Project1/products.txt"));
             salePersonScanner.nextLine();
