@@ -3,7 +3,20 @@ package Project1;
 public class Product {
     private String code, name;
     private int price, flatComm, q1Comm, q2Comm, q3Comm, q4Comm;
-    public Product(String code, String name, int price, int[] comm){
+    public Product(String code, String name, int price, int[] comm) throws InvalidInputException{
+        //-----------------------------------------Exception cases------------------------------------------------//
+        if(!code.equalsIgnoreCase("ac") && !code.equalsIgnoreCase("st")
+            && !code.equalsIgnoreCase("rv"))
+            throw new InvalidInputException(": For input :\"" + code + "\"");
+        if(!name.equalsIgnoreCase("Air Conditioners") && !name.equalsIgnoreCase("Smart TVs")
+            && !name.equalsIgnoreCase("Robot Vacuums"))
+            throw new InvalidInputException(": For input :\"" + name + "\"");
+        if(price < 0) throw new InvalidInputException(": For input :\"" + price + "\"");
+        for(int i: comm)
+            if(i < 0)
+                throw new InvalidInputException(": For input :\"" + i + "\"");
+
+        //-----------------------------------------Assign values------------------------------------------------//
         this.code = code;
         this.name = name;
         this.price = price;
@@ -21,7 +34,8 @@ public class Product {
     protected int getQ2Comm(){return this.q2Comm;}
     protected int getQ3Comm(){return this.q3Comm;}
     protected int getQ4Comm(){return this.q4Comm;}
-    protected void print(){
+
+    protected void print(){// TODO : add printing format
         System.out.printf("%s %d \n",this.name,this.price);
     }
 }

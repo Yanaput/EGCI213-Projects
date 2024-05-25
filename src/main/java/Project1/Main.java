@@ -5,65 +5,105 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
+        System.setErr(System.out); //For debugging. I used err and out stream, but the printing order is kind of strange.
         Main mainApp = new Main();
         mainApp.task();
     }
 
-    public void task(){
+    public void task() {
         Scanner fileScanner;
-        ArrayList<Product> productArrayList = new ArrayList<Product>();
-        ArrayList<SalePerson> salePersonArrayList = new ArrayList<SalePerson>();
+        Scanner keyboardScanner = new Scanner(System.in);
+
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        ArrayList<SalePerson> salePersonArrayList = new ArrayList<>();
+
+        boolean fileLoaded = false;
+        String fileName;
+        String readLine = "";
+
         //----------------------------------------- products------------------------------------------------//
+        fileName = "products.txt";
+        while (!fileLoaded) {
+            try {
+                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
+                fileLoaded = true;
+                fileScanner.nextLine();
+                System.out.println("Read from src/main/java/Project1/" + fileName);
+                while (fileScanner.hasNext()) {
+                    try {
+                        readLine = fileScanner.nextLine();
+                        String[] cols = readLine.split(",");
+                        for (int i = 0; i < cols.length; i++) {
+                            cols[i] = cols[i].trim();
+                        }
 
-        try {
-            fileScanner = new Scanner(new File("src/main/java/Project1/products.txt"));
-            fileScanner.nextLine();
-            System.out.println("Read from src/main/java/Project1/products.txt");
-
-            while (fileScanner.hasNext()) {
-                String readLine = fileScanner.nextLine();
-                String[] cols = readLine.split(",");
-                for (int i = 0; i < cols.length; i++) {
-                    cols[i] = cols[i].trim();
+                        int[] commRate = new int[5];
+                        for (int i = 0; i < commRate.length; i++) {
+                            if(i+3 < cols.length)
+                                commRate[i] = Integer.parseInt(cols[i + 3]);
+                        }
+                        productArrayList.add(new Product(cols[0], cols[1], Integer.parseInt(cols[2]), commRate));
+                    }catch (Exception e){
+                        System.err.println(e + "\n[" + readLine + "]  -->  skip this line\n");
+                    }
                 }
+                fileScanner.close();
 
-                int[] commRate = {Integer.parseInt(cols[3]), Integer.parseInt(cols[4]), Integer.parseInt(cols[5]),
-                        Integer.parseInt(cols[6]), Integer.parseInt(cols[7])};
-
-                productArrayList.add(new Product(cols[0], cols[1], Integer.parseInt(cols[2]), commRate));
+            } catch (FileNotFoundException e) {
+                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
+                fileName = keyboardScanner.next();
             }
-            fileScanner.close();
-        }
-        catch (Exception e){
-            System.err.println(e);
         }
 
-        for (Product i : productArrayList)
+        for (Product i : productArrayList) {
             i.print();
+        }
+        System.out.println();
 
         //----------------------------------------- SalePersons------------------------------------------------//
-        try {
+        fileLoaded = false;
+        fileName = "salespersons_errors.txt";
+        while (!fileLoaded){
+            try {
+                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
+                fileLoaded = true;
+                fileScanner.nextLine();
+                System.out.println("Read from src/main/java/Project1/" + fileName);
 
-            fileScanner = new Scanner(new File("src/main/java/Project1/salespersons.txt"));
-            fileScanner.nextLine();
-            System.out.println("Read from src/main/java/Project1/salespersons.txt");
+                while (fileScanner.hasNext()) {
+                    try {
+                        readLine = fileScanner.nextLine();
+                        String[] cols = readLine.split(",");
 
+                        if (!cols[0].equals("c") && !cols[0].equals("s"))
+                            throw new InvalidInputException(": For input :\"" + cols[0].trim() + "\"");
 
-            while (fileScanner.hasNext()) {
-                String readLine = fileScanner.nextLine();
-                String[] cols = readLine.split(",");
-                for (int i = 0; i < cols.length; i++) {
-                    cols[i] = cols[i].trim();
+                        for (int i = 0; i < cols.length; i++) {
+                            cols[i] = cols[i].trim();
+                        }
+
+                        int[] commRate = new int[4];
+                        for (int i = 0; i < commRate.length; i++) {
+                            if(i+3 < cols.length)
+                                commRate[i] = Integer.parseInt(cols[i + 3]);
+                        }
+
+                        int salary = (cols.length > 7) ? Integer.parseInt(cols[7].trim()) : 0;
+                        salePersonArrayList.add(new SalePerson(cols[0], cols[1], cols[2], commRate, salary));
+                    }catch (InvalidInputException | NumberFormatException e){
+                        System.err.println(e + "\n[" + readLine + "]  -->  skip this line\n");
+                    }
                 }
-                salePersonArrayList.add(new SalePerson(cols[0], cols[1]));
+                fileScanner.close();
+
+            } catch (FileNotFoundException e) {
+                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
+                fileName = keyboardScanner.next();
             }
-            fileScanner.close();
-        }
-        catch(Exception e){
-            System.err.println(e);
         }
 
         for(SalePerson i: salePersonArrayList)
             i.print();
+
     }
 }
