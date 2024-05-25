@@ -1,8 +1,8 @@
 package Project1;
 
 public class Product {
-    String code, name;
-    int price, flatComm, q1Comm, q2Comm, q3Comm, q4Comm;
+    private String code, name;
+    private int price, flatComm, q1Comm, q2Comm, q3Comm, q4Comm;
     public Product(String code, String name, int price, int[] comm){
         this.code = code;
         this.name = name;
