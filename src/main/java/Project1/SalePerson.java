@@ -1,16 +1,16 @@
 package Project1;
 
-public class SalePerson {
+import java.util.Arrays;
+
+public class SalePerson implements Comparable<SalePerson> {
     private String type, name, product;
-    private int  q1Comm, q2Comm, q3Comm, q4Comm, salary;
-    public SalePerson(String type, String name, String product, int[] comm, int salary) throws InvalidInputException{
+    private int q1Unit, q2Unit, q3Unit, q4Unit, salary, totalUnit, travelExpense, mobileExpense, travelExcess, mobileExcess;
+    public SalePerson(String type, String name, String product, int[] unitSold, int salary) throws InvalidInputException{
         //-----------------------------------------Exception cases------------------------------------------------//
-        if(!type.equalsIgnoreCase("c") && !type.equalsIgnoreCase("s"))
-            throw new InvalidInputException(": For input :\"" + type + "\"");
         if(!product.equalsIgnoreCase("ac") && !product.equalsIgnoreCase("st")
             && !product.equalsIgnoreCase("rv"))
             throw new InvalidInputException(": For input :\"" + product + "\"");
-        for(int i: comm)
+        for(int i: unitSold)
             if(i < 0)
                 throw new InvalidInputException(": For input :\"" + i + "\"");
         if (salary < 0)
@@ -20,23 +20,44 @@ public class SalePerson {
         this.type = type;
         this.name = name;
         this.product = product;
-        this.q1Comm = comm[0];
-        this.q2Comm = comm[1];
-        this.q3Comm = comm[2];
-        this.q4Comm = comm[3];
+        this.q1Unit = unitSold[0];
+        this.q2Unit = unitSold[1];
+        this.q3Unit = unitSold[2];
+        this.q4Unit = unitSold[3];
         this.salary = salary;
+        this.totalUnit = Arrays.stream(unitSold).sum();
     }
-
+    //-----------------------------------------Functions------------------------------------------------//
     protected String getType(){return this.type;}
     protected String getName(){return this.name;}
     protected String getProduct(){return this.product;}
-    protected int getQ1Comm(){return this.q1Comm;}
-    protected int getQ2Comm(){return this.q2Comm;}
-    protected int getQ3Comm(){return this.q3Comm;}
-    protected int getQ4Comm(){return this.q4Comm;}
+    protected int getQ1Unit(){return this.q1Unit;}
+    protected int getQ2Unit(){return this.q2Unit;}
+    protected int getQ3Unit(){return this.q3Unit;}
+    protected int getQ4Unit(){return this.q4Unit;}
     protected int getSalary(){return this.salary;}
+    protected int getTotalUnit(){return this.totalUnit;}
+    protected int getTravelExpense(){return this.travelExpense;}
+    protected int getMobileExpense(){return this.mobileExpense;}
+    protected int getTravelExcess(){return this.travelExcess;}
+    protected int getMobileExcess(){return this.mobileExcess;}
+    protected void setExpenses(int travelExpense, int mobileExpense){
+        this.travelExpense += travelExpense;
+        this.mobileExpense += mobileExpense;
+    }
+
+    protected void setExcess(int travelExcess, int mobileExcess){
+        this.travelExcess = (this.travelExpense > travelExcess) ? this.travelExpense - travelExcess : 0
+                ;
+        this.mobileExcess = (this.mobileExpense > mobileExcess) ? this.mobileExpense - mobileExcess : 0;
+    }
+
+    @Override
+    public int compareTo(SalePerson other){
+        return Integer.compare(this.totalUnit, other.totalUnit);
+    }
 
     public void print(){// TODO : add printing format
-        System.out.printf("%s %s %d\n",this.name, this.type, this.salary);
+        System.out.printf("%s %s %d %d %d %d\n",this.name, this.type, this.salary, this.totalUnit, this.travelExpense, this.mobileExpense);
     }
 }

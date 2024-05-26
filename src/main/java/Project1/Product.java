@@ -3,19 +3,7 @@ package Project1;
 public class Product {
     private String code, name;
     private int price, flatComm, q1Comm, q2Comm, q3Comm, q4Comm;
-    public Product(String code, String name, int price, int[] comm) throws InvalidInputException{
-        //-----------------------------------------Exception cases------------------------------------------------//
-        if(!code.equalsIgnoreCase("ac") && !code.equalsIgnoreCase("st")
-            && !code.equalsIgnoreCase("rv"))
-            throw new InvalidInputException(": For input :\"" + code + "\"");
-        if(!name.equalsIgnoreCase("Air Conditioners") && !name.equalsIgnoreCase("Smart TVs")
-            && !name.equalsIgnoreCase("Robot Vacuums"))
-            throw new InvalidInputException(": For input :\"" + name + "\"");
-        if(price < 0) throw new InvalidInputException(": For input :\"" + price + "\"");
-        for(int i: comm)
-            if(i < 0)
-                throw new InvalidInputException(": For input :\"" + i + "\"");
-
+    public Product(String code, String name, int price, int[] comm) {
         //-----------------------------------------Assign values------------------------------------------------//
         this.code = code;
         this.name = name;
