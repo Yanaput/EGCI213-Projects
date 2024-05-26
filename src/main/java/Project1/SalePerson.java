@@ -3,14 +3,14 @@ package Project1;
 import java.util.Arrays;
 
 public class SalePerson implements Comparable<SalePerson> {
-    private String type, name, product;
+    private String type, name, productCode;
     private int q1Unit, q2Unit, q3Unit, q4Unit, salary, totalUnit, travelExpense, mobileExpense, travelExcess,
             mobileExcess, totalCommission, totalPayment;
-    public SalePerson(String type, String name, String product, int[] unitSold, int salary) throws InvalidInputException{
+    public SalePerson(String type, String name, String productCode, int[] unitSold, int salary) throws InvalidInputException{
         //-----------------------------------------Exception cases------------------------------------------------//
-        if(!product.equalsIgnoreCase("ac") && !product.equalsIgnoreCase("st")
-            && !product.equalsIgnoreCase("rv"))
-            throw new InvalidInputException(": For input :\"" + product + "\"");
+        if(!productCode.equalsIgnoreCase("ac") && !productCode.equalsIgnoreCase("st")
+            && !productCode.equalsIgnoreCase("rv"))
+            throw new InvalidInputException(": For input :\"" + productCode + "\"");
         for(int i: unitSold)
             if(i < 0)
                 throw new InvalidInputException(": For input :\"" + i + "\"");
@@ -28,7 +28,7 @@ public class SalePerson implements Comparable<SalePerson> {
             throw new InvalidInputException(": For input :\"" + type + "\"");
 
         this.name = name;
-        this.product = product;
+        this.productCode = productCode;
         this.q1Unit = unitSold[0];
         this.q2Unit = unitSold[1];
         this.q3Unit = unitSold[2];
@@ -39,7 +39,7 @@ public class SalePerson implements Comparable<SalePerson> {
     //-----------------------------------------Functions------------------------------------------------//
     protected String getType(){return this.type;}
     protected String getName(){return this.name;}
-    protected String getProduct(){return this.product;}
+    protected String getProductCode(){return this.productCode;}
     protected int getQ1Unit(){return this.q1Unit;}
     protected int getQ2Unit(){return this.q2Unit;}
     protected int getQ3Unit(){return this.q3Unit;}

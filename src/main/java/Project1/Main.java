@@ -177,7 +177,7 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
         for(SalePerson person: salePersonArrayList){
             for (Product product: productArrayList){
                 double totalCommission = 0;
-                if(person.getProduct().equalsIgnoreCase(product.getCode())){
+                if(person.getProductCode().equalsIgnoreCase(product.getCode())){
                     int[] quarterlyUnit = person.getQuarterlyUnit();
                     int[] quarterlyComm = product.getQuarterlyComm();
                     switch (person.getType().toLowerCase().charAt(0)){
