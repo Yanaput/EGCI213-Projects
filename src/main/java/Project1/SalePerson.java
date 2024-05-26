@@ -6,36 +6,38 @@ public class SalePerson implements Comparable<SalePerson> {
     private String type, name, productCode;
     private int q1Unit, q2Unit, q3Unit, q4Unit, salary, totalUnit, travelExpense, mobileExpense, travelExcess,
             mobileExcess, totalCommission, totalPayment;
-    public SalePerson(String type, String name, String productCode, int[] unitSold, int salary) throws InvalidInputException{
-        //-----------------------------------------Exception cases------------------------------------------------//
-        if(!productCode.equalsIgnoreCase("ac") && !productCode.equalsIgnoreCase("st")
-            && !productCode.equalsIgnoreCase("rv"))
-            throw new InvalidInputException(": For input :\"" + productCode + "\"");
-        for(int i: unitSold)
-            if(i < 0)
-                throw new InvalidInputException(": For input :\"" + i + "\"");
-        if (salary < 0)
-            throw new InvalidInputException(": For input :\"" + salary + "\"");
 
-        //-----------------------------------------Assign values------------------------------------------------//
-        if(type.equalsIgnoreCase("c")){
-            this.type = "commission";
-        }
-        else if(type.equalsIgnoreCase("s")){
-            this.type = "salary+";
-        }
-        else
-            throw new InvalidInputException(": For input :\"" + type + "\"");
-
-        this.name = name;
-        this.productCode = productCode;
-        this.q1Unit = unitSold[0];
-        this.q2Unit = unitSold[1];
-        this.q3Unit = unitSold[2];
-        this.q4Unit = unitSold[3];
-        this.salary = salary;
-        this.totalUnit = Arrays.stream(unitSold).sum();
+    private int parseIntNonNegative(String str) throws InvalidInputException {
+        int n = Integer.parseInt(str);
+        if (n < 0) throw new InvalidInputException(": For input :\"" + str + "\"");
+        return n;
     }
+
+    public SalePerson(String args[]) throws InvalidInputException {
+        switch (args[0].toLowerCase()) {
+            case "c" -> this.type = "commission";
+            case "s" -> this.type = "salary+";
+            default -> throw new InvalidInputException(": For input :\"" + args[0] + "\"");
+        }
+
+        this.name = args[1];
+
+        switch (args[2].toLowerCase()) {
+            case "ac":
+            case "st":
+            case "rv":
+                this.productCode = args[2].toUpperCase();
+                break;
+            default:
+                throw new InvalidInputException(": For input :\"" + args[2] + "\"");
+        }
+        this.q1Unit = parseIntNonNegative(args[3]);
+        this.q2Unit = parseIntNonNegative(args[4]);
+        this.q3Unit = parseIntNonNegative(args[5]);
+        this.q4Unit = parseIntNonNegative(args[6]);
+        this.salary = this.type.equalsIgnoreCase("salary+") ? parseIntNonNegative(args[7]) : 0;
+    }
+
     //-----------------------------------------Functions------------------------------------------------//
     protected String getType(){return this.type;}
     protected String getName(){return this.name;}

@@ -3,20 +3,56 @@ package Project1;
 import java.io.*;
 import java.util.*;
 
+// Input wrapper class
+class LineHandler {
+    public String [] argsString;
+    public String originalInput;
+    public LineHandler(String [] argsString, String originalInput) {
+        this.argsString = argsString;
+        this.originalInput = originalInput;
+    }
+}
+
 public class Main {     //TODO : add printing format, assign totalPayment to each salePerson, check compare function, summary
     public static void main(String[] args) {
         //System.setErr(System.out); //For debugging. I used err and out stream, but the printing order is kind of strange.
         Main mainApp = new Main();
         mainApp.task();
+    }
 
+    private static ArrayList<LineHandler> argsFromFile(String fileName) {
+        Scanner fileScanner;
+        Scanner keyboardScanner = new Scanner(System.in);
+        boolean fileLoaded = false;
+        ArrayList<LineHandler> args = new ArrayList<>();
+        while (!fileLoaded) {
+            try {
+                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
+                fileLoaded = true;
+                fileScanner.nextLine();
+                System.out.println("Read from src/main/java/Project1/" + fileName);
+                while (fileScanner.hasNext()) {
+                    String readLine = fileScanner.nextLine();
+                    String[] cols = readLine.split(",");
+                    for (int i=0; i<cols.length; i++)
+                        cols[i] = cols[i].trim();
+                    LineHandler line = new LineHandler(cols, readLine);
+                    args.add(line);
+                }
+                fileScanner.close();
+
+            } catch (FileNotFoundException e) {
+                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
+                fileName = keyboardScanner.next();
+            }
+        }
+
+        return args;
     }
 
     public void task() {
-        Scanner fileScanner;
-        Scanner keyboardScanner = new Scanner(System.in);
 
-        ArrayList<Product> productArrayList = new ArrayList<>();
-        ArrayList<SalePerson> salePersonArrayList = new ArrayList<>();
+
         ArrayList<Reimbursements> reimArrayList = new ArrayList<>();
 
         boolean fileLoaded = false;
@@ -25,77 +61,25 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
 
         //----------------------------------------- products------------------------------------------------//
         fileName = "products.txt";
-        while (!fileLoaded) {
-            try {
-                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
-                fileLoaded = true;
-                fileScanner.nextLine();
-                System.out.println("Read from src/main/java/Project1/" + fileName);
-                while (fileScanner.hasNext()) {
-                    readLine = fileScanner.nextLine();
-                    String[] cols = readLine.split(",");
-                    for (int i = 0; i < cols.length; i++) {
-                        cols[i] = cols[i].trim();
-                    }
 
-                    int[] commRate = new int[5];
-                    for (int i = 0; i < commRate.length; i++) {
-                        if(i+3 < cols.length)
-                            commRate[i] = Integer.parseInt(cols[i + 3]);
-                    }
-                    productArrayList.add(new Product(cols[0], cols[1], Integer.parseInt(cols[2]), commRate));
-                }
-                fileScanner.close();
-
-            } catch (FileNotFoundException e) {
-                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
-                fileName = keyboardScanner.next();
-            }
-        }
-        System.out.println("\nProduct"); //debug
-        for (Product i : productArrayList) {
-            i.print();
-        }
-        System.out.println();
+        ArrayList<LineHandler> productsList = argsFromFile(fileName);
+        ArrayList<Product> productArrayList = new ArrayList<>();
+        for (LineHandler oneLine: productsList)
+            productArrayList.add(new Product(oneLine.argsString));
 
         //-----------------------------------------SalePersons------------------------------------------------//
-        fileLoaded = false;
         fileName = "salespersons_errors.txt";
-        while (!fileLoaded){
+
+        ArrayList<LineHandler> salespersonsList = argsFromFile(fileName);
+        ArrayList<SalePerson> salePersonArrayList = new ArrayList<>();
+        for (LineHandler oneLine: salespersonsList) {
             try {
-                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
-                fileLoaded = true;
-                fileScanner.nextLine();
-                System.out.println("Read from src/main/java/Project1/" + fileName);
-
-                while (fileScanner.hasNext()) {
-                    try {
-                        readLine = fileScanner.nextLine();
-                        String[] cols = readLine.split(",");
-
-                        for (int i = 0; i < cols.length; i++) {
-                            cols[i] = cols[i].trim();
-                        }
-
-                        int[] unitSold = new int[4];
-                        for (int i = 0; i < unitSold.length; i++) {
-                            unitSold[i] = Integer.parseInt(cols[i + 3]);
-                        }
-
-                        switch (cols[0].toLowerCase()){
-                            case "s" -> salePersonArrayList.add(new SalePerson(cols[0], cols[1], cols[2], unitSold, Integer.parseInt(cols[7])));
-                            case "c" -> salePersonArrayList.add(new SalePerson(cols[0], cols[1], cols[2], unitSold, 0));
-                            default -> throw new InvalidInputException(": For input :\"" + cols[0].trim() + "\"");
-                        }
-                    }catch (Exception e){
-                        System.err.println(e + "\n[" + readLine + "]  -->  skip this line\n");
-                    }
-                }
-                fileScanner.close();
-
-            } catch (FileNotFoundException e) {
-                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
-                fileName = keyboardScanner.next();
+                SalePerson saleperson = new SalePerson(oneLine.argsString);
+                salePersonArrayList.add(saleperson);
+            }
+            catch (InvalidInputException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
+                System.out.println(e);
+                System.out.printf("[%s] --> skip this line\n", oneLine.originalInput);
             }
         }
         System.out.println("\nsalePerson"); //debug
@@ -103,7 +87,7 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
             i.print();
 
         //-----------------------------------------Expenses------------------------------------------------//
-        fileLoaded = false;
+        /*fileLoaded = false;
         fileName = "expenses.txt";
         while(!fileLoaded){
             try {
@@ -201,6 +185,6 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
         for(SalePerson i: salePersonArrayList)
             System.out.printf("%s  %,d \n", i.getName(), i.getTotalCommission());
 
-        keyboardScanner.close();
+        keyboardScanner.close();*/
     }
 }

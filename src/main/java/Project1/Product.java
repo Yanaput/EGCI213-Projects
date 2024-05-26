@@ -3,16 +3,16 @@ package Project1;
 public class Product {
     private String code, name;
     private int price, flatComm, q1Comm, q2Comm, q3Comm, q4Comm;
-    public Product(String code, String name, int price, int[] comm) {
-        //-----------------------------------------Assign values------------------------------------------------//
-        this.code = code;
-        this.name = name;
-        this.price = price;
-        this.flatComm = comm[0];
-        this.q1Comm = comm[1];
-        this.q2Comm = comm[2];
-        this.q3Comm = comm[3];
-        this.q4Comm =  comm[4];
+
+    public Product(String [] params) {
+        this.code = params[0];
+        this.name = params[1];
+        this.price = Integer.parseInt(params[2]);
+        this.flatComm = Integer.parseInt(params[3]);
+        this.q1Comm = Integer.parseInt(params[4]);
+        this.q2Comm = Integer.parseInt(params[5]);
+        this.q3Comm = Integer.parseInt(params[6]);
+        this.q4Comm = Integer.parseInt(params[7]);
     }
 
     protected String getCode(){return this.code;}
