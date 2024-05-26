@@ -22,6 +22,8 @@ public class Product {
     protected int getQ2Comm(){return this.q2Comm;}
     protected int getQ3Comm(){return this.q3Comm;}
     protected int getQ4Comm(){return this.q4Comm;}
+    protected int getPrice(){return this.price;}
+    protected int[] getQuarterlyComm(){return new int[]{this.q1Comm, this.q2Comm, this.q3Comm, this.q4Comm};}
 
     protected void print(){// TODO : add printing format
         System.out.printf("%s %d \n",this.name,this.price);

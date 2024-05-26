@@ -3,11 +3,12 @@ package Project1;
 import java.io.*;
 import java.util.*;
 
-public class Main {
+public class Main {     //TODO : add printing format, assign totalPayment to each salePerson, check compare function, summary
     public static void main(String[] args) {
         //System.setErr(System.out); //For debugging. I used err and out stream, but the printing order is kind of strange.
         Main mainApp = new Main();
         mainApp.task();
+
     }
 
     public void task() {
@@ -51,7 +52,7 @@ public class Main {
                 fileName = keyboardScanner.next();
             }
         }
-
+        System.out.println("\nProduct"); //debug
         for (Product i : productArrayList) {
             i.print();
         }
@@ -97,7 +98,7 @@ public class Main {
                 fileName = keyboardScanner.next();
             }
         }
-
+        System.out.println("\nsalePerson"); //debug
         for(SalePerson i: salePersonArrayList)
             i.print();
 
@@ -137,7 +138,7 @@ public class Main {
                 fileName = keyboardScanner.next();
             }
         }
-        //-----------------------------------------Reimbursements------------------------------------------------//
+        //-----------------------------------------Reimbursements&Excess----------------------------------------------//
         fileLoaded = false;
         fileName = "reimbursements.txt";
         while(!fileLoaded){
@@ -160,15 +161,45 @@ public class Main {
                 fileName = keyboardScanner.next();
             }
         }
+
         for(SalePerson i: salePersonArrayList){
             for(Reimbursements j:reimArrayList)
                 if(i.getType().equalsIgnoreCase(j.getType()))
                     i.setExcess(j.getTravelLimit(), j.getMobileLimit());
         }
 
-
+        System.out.println("\nexcess"); //debug
         for(SalePerson i: salePersonArrayList)
             System.out.printf("%s  %,d %,d\n", i.getName(), i.getTravelExcess(), i.getMobileExcess());
+
+        //-----------------------------------------Total commission------------------------------------------------//
+
+        for(SalePerson person: salePersonArrayList){
+            for (Product product: productArrayList){
+                double totalCommission = 0;
+                if(person.getProduct().equalsIgnoreCase(product.getCode())){
+                    int[] quarterlyUnit = person.getQuarterlyUnit();
+                    int[] quarterlyComm = product.getQuarterlyComm();
+                    switch (person.getType().toLowerCase().charAt(0)){
+                        case ('c') :
+                            for(int i = 0; i < quarterlyUnit.length; i++)
+                                totalCommission += quarterlyUnit[i]* product.getPrice()*((double) quarterlyComm[i] /100);
+                            break;
+                        case ('s') :
+                            totalCommission += person.getSalary();
+                            for (int j : quarterlyUnit)
+                                totalCommission += j * ((double) product.getFlatComm() / 100);
+                            break;
+                        default: break;
+                    }
+                    person.setTotalCommission((int)totalCommission);
+                }
+            }
+        }
+        System.out.println();
+        System.out.println("\ntotal commission"); //debug
+        for(SalePerson i: salePersonArrayList)
+            System.out.printf("%s  %,d \n", i.getName(), i.getTotalCommission());
 
         keyboardScanner.close();
     }
