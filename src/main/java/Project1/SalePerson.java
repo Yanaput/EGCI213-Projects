@@ -13,7 +13,7 @@ public class SalePerson implements Comparable<SalePerson> {
         return n;
     }
 
-    public SalePerson(String args[]) throws InvalidInputException {
+    public SalePerson(String[] args) throws InvalidInputException {
         switch (args[0].toLowerCase()) {
             case "c" -> this.type = "commission";
             case "s" -> this.type = "salary+";
@@ -36,6 +36,7 @@ public class SalePerson implements Comparable<SalePerson> {
         this.q3Unit = parseIntNonNegative(args[5]);
         this.q4Unit = parseIntNonNegative(args[6]);
         this.salary = this.type.equalsIgnoreCase("salary+") ? parseIntNonNegative(args[7]) : 0;
+        this.totalUnit = q1Unit + q2Unit + q3Unit + q4Unit;
     }
 
     //-----------------------------------------Functions------------------------------------------------//
@@ -69,9 +70,7 @@ public class SalePerson implements Comparable<SalePerson> {
 
 
     @Override
-    public int compareTo(SalePerson other){
-        return Integer.compare(this.totalUnit, other.totalUnit);
-    }
+    public int compareTo(SalePerson other){return Integer.compare(other.totalUnit, this.totalUnit);}
 
     public void print(){// TODO : add printing format
         System.out.printf("%s %s %d %d %d %d\n",this.name, this.type, this.salary, this.totalUnit, this.travelExpense, this.mobileExpense);

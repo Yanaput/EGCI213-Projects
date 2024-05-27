@@ -78,7 +78,7 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
         }
 
         //-----------------------------------------SalePersons------------------------------------------------//
-        fileName = "salespersons.txt";
+        fileName = "salespersons_errors.txt";
         ArrayList<LineHandler> salespersonsList = argsFromFile(fileName);
         ArrayList<SalePerson> salePersonArrayList = new ArrayList<>();
 
@@ -140,8 +140,8 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
                             break;
                         case ('s') :
                             totalCommission += person.getSalary();
-                            for (int j : quarterlyUnit)
-                                totalCommission += j * ((double) product.getFlatComm() / 100);
+                            for (int unit : quarterlyUnit)
+                                totalCommission += unit * ((double) product.getFlatComm() / 100);
                             break;
                         default: break;
                     }
@@ -151,9 +151,13 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
         }
         System.out.println();
         System.out.println("\ntotal commission"); //debug
-        for(SalePerson i: salePersonArrayList)
-            System.out.printf("%s  %,d \n", i.getName(), i.getTotalCommission());
-
-        keyboardScanner.close();*/
+        for(SalePerson person: salePersonArrayList)
+            System.out.printf("%s  %,d \n", person.getName(), person.getTotalCommission());
+        */
+        Collections.sort(salePersonArrayList);
+        System.out.println();
+        for(SalePerson person: salePersonArrayList){
+                System.out.printf("%-10s %-5s %,-10d unit\n", person.getName(), person.getProductCode(), person.getTotalUnit());
+        }
     }
 }
