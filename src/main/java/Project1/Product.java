@@ -25,7 +25,10 @@ public class Product {
     protected int getPrice(){return this.price;}
     protected int[] getQuarterlyComm(){return new int[]{this.q1Comm, this.q2Comm, this.q3Comm, this.q4Comm};}
 
-    protected void print(){// TODO : add printing format
-        System.out.printf("%s %d \n",this.name,this.price);
+    protected void print(){
+        System.out.printf(
+                "%-20s (%2s)    unit price = %,6d   commissions >> flat = %3d%%   Q1 = %3d%%   Q2 = %3d%%   Q3 = %3d%%   Q4 = %3d%% \n",
+                this.name, this.code, this.price, this.flatComm, this.q1Comm, this.q2Comm, this.q3Comm, this.q4Comm
+        );
     }
 }

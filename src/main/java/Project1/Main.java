@@ -5,12 +5,14 @@ import java.util.*;
 
 // Input wrapper class
 class LineHandler {
-    public String [] argsString;
-    public String originalInput;
+    private String [] argsString;
+    private String originalInput;
     public LineHandler(String [] argsString, String originalInput) {
         this.argsString = argsString;
         this.originalInput = originalInput;
     }
+    public String [] getArgsString() {return this.argsString;}
+    public String getOriginalInput() {return this.originalInput;}
 }
 
 public class Main {     //TODO : add printing format, assign totalPayment to each salePerson, check compare function, summary
@@ -30,7 +32,7 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
                 fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
                 fileLoaded = true;
                 fileScanner.nextLine();
-                System.out.println("Read from src/main/java/Project1/" + fileName);
+                System.out.println("\nRead from src/main/java/Project1/" + fileName);
                 while (fileScanner.hasNext()) {
                     String readLine = fileScanner.nextLine();
                     String[] cols = readLine.split(",");
@@ -48,114 +50,81 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
         }
 
         return args;
+
     }
 
     public void task() {
 
-
-        ArrayList<Reimbursements> reimArrayList = new ArrayList<>();
-
-        boolean fileLoaded = false;
-        String fileName;
-        String readLine = "";
-
         //----------------------------------------- products------------------------------------------------//
-        fileName = "products.txt";
-
+        String fileName = "products.txt";
         ArrayList<LineHandler> productsList = argsFromFile(fileName);
         ArrayList<Product> productArrayList = new ArrayList<>();
-        for (LineHandler oneLine: productsList)
-            productArrayList.add(new Product(oneLine.argsString));
+
+        for (LineHandler oneLine: productsList) {
+            Product product = new Product(oneLine.getArgsString());
+            productArrayList.add(product);
+            product.print();
+        }
+
+        //-----------------------------------------Reimbursements & Excess----------------------------------------------//
+        fileName = "reimbursements.txt";
+        ArrayList<LineHandler> reimbursementsList = argsFromFile(fileName);
+        ArrayList<Reimbursements> reimbursementsArrayList = new ArrayList<>();
+
+        for(LineHandler oneLine : reimbursementsList) {
+            Reimbursements reimbursements = new Reimbursements(oneLine.getArgsString());
+            reimbursementsArrayList.add(reimbursements);
+            reimbursements.print();
+        }
 
         //-----------------------------------------SalePersons------------------------------------------------//
-        fileName = "salespersons_errors.txt";
-
+        fileName = "salespersons.txt";
         ArrayList<LineHandler> salespersonsList = argsFromFile(fileName);
         ArrayList<SalePerson> salePersonArrayList = new ArrayList<>();
+
         for (LineHandler oneLine: salespersonsList) {
             try {
-                SalePerson saleperson = new SalePerson(oneLine.argsString);
+                SalePerson saleperson = new SalePerson(oneLine.getArgsString());
                 salePersonArrayList.add(saleperson);
+                saleperson.print();
             }
             catch (InvalidInputException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
                 System.out.println(e);
-                System.out.printf("[%s] --> skip this line\n", oneLine.originalInput);
+                System.out.printf("[%s] --> skip this line\n", oneLine.getOriginalInput());
             }
         }
-        System.out.println("\nsalePerson"); //debug
-        for(SalePerson i: salePersonArrayList)
-            i.print();
 
         //-----------------------------------------Expenses------------------------------------------------//
-        /*fileLoaded = false;
         fileName = "expenses.txt";
-        while(!fileLoaded){
-            try {
-                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
-                fileLoaded = true;
-                System.out.println("Read from src/main/java/Project1/" + fileName);
-                fileScanner.nextLine();
+        ArrayList<LineHandler> expensesList = argsFromFile(fileName);
 
-                while (fileScanner.hasNext()){
-                    readLine = fileScanner.nextLine();
-                    String[] cols = readLine.split(",");
-
-                    for (int i = 0; i < cols.length; i++) {
-                        cols[i] = cols[i].trim();
-                    }
-
-                    boolean nameFound = false;
-                    for(SalePerson i:salePersonArrayList){
-                        if(i.getName().equalsIgnoreCase(cols[0])) {
-                            i.setExpenses(Integer.parseInt(cols[1]), Integer.parseInt(cols[2]));
-                            System.out.printf("%s  >>  total = %,6d, %,6d\n", readLine, i.getTravelExpense(), i.getMobileExpense());
-                            nameFound = true;
-                        }
-                    }
-                    if(!nameFound){
-                        System.out.printf("%s  >>  not exist\n", readLine);
-                    }
+        for (LineHandler oneLine: expensesList) {
+            String [] cols = oneLine.getArgsString();
+            boolean nameFound = false;
+            for(SalePerson salePerson : salePersonArrayList)
+                if(salePerson.getName().equalsIgnoreCase(cols[0])) {
+                    salePerson.setExpenses(Integer.parseInt(cols[1]), Integer.parseInt(cols[2]));
+                    System.out.printf("%s  >>  total = %,6d, %,6d\n",
+                            oneLine.getOriginalInput(), salePerson.getTravelExpense(), salePerson.getMobileExpense()
+                    );
+                    nameFound = true; break;
                 }
-                fileScanner.close();
-            }catch(FileNotFoundException e){
-                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
-                fileName = keyboardScanner.next();
-            }
-        }
-        //-----------------------------------------Reimbursements&Excess----------------------------------------------//
-        fileLoaded = false;
-        fileName = "reimbursements.txt";
-        while(!fileLoaded){
-            try{
-                fileScanner = new Scanner(new File("src/main/java/Project1/" + fileName));
-                fileLoaded = true;
-                fileScanner.nextLine();
-
-                while (fileScanner.hasNext()){
-                    readLine = fileScanner.nextLine();
-                    String[] cols = readLine.split(",");
-                    for(int i = 0; i < cols.length; i++)
-                        cols[i] = cols[i].trim();
-                    reimArrayList.add(new Reimbursements(cols[0], Integer.parseInt(cols[1]), Integer.parseInt(cols[2])));
-                }
-
-                fileScanner.close();
-            }catch (FileNotFoundException e){
-                System.err.println(e + "The system cannot find the file specified \nEnter correct file name =");
-                fileName = keyboardScanner.next();
-            }
+            if(!nameFound)
+                System.out.printf("%s  >>  not exist\n", oneLine.getOriginalInput());
         }
 
-        for(SalePerson i: salePersonArrayList){
-            for(Reimbursements j:reimArrayList)
-                if(i.getType().equalsIgnoreCase(j.getType()))
-                    i.setExcess(j.getTravelLimit(), j.getMobileLimit());
+        //-----------------------------------------Reimbursements & Excess----------------------------------------------//
+        for(SalePerson saleperson : salePersonArrayList){
+            for(Reimbursements reimbursements : reimbursementsArrayList)
+                if(saleperson.getType().equalsIgnoreCase(reimbursements.getType()))
+                    saleperson.setExcess(reimbursements.getTravelLimit(), reimbursements.getMobileLimit());
         }
 
         System.out.println("\nexcess"); //debug
         for(SalePerson i: salePersonArrayList)
             System.out.printf("%s  %,d %,d\n", i.getName(), i.getTravelExcess(), i.getMobileExcess());
 
+        /*
         //-----------------------------------------Total commission------------------------------------------------//
 
         for(SalePerson person: salePersonArrayList){

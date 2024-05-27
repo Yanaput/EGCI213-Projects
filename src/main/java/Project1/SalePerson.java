@@ -67,6 +67,7 @@ public class SalePerson implements Comparable<SalePerson> {
 
     protected void setTotalCommission(int totalCommission){this.totalCommission = totalCommission;}
 
+
     @Override
     public int compareTo(SalePerson other){
         return Integer.compare(this.totalUnit, other.totalUnit);
