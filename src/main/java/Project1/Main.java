@@ -113,7 +113,7 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
                 System.out.printf("%s  >>  not exist\n", oneLine.getOriginalInput());
         }
 
-        //-----------------------------------------Reimbursements & Excess----------------------------------------------//
+        //----------------------------------------Reimbursements & Excess----------------------------------------------//
         for(SalePerson saleperson : salePersonArrayList){
             for(Reimbursements reimbursements : reimbursementsArrayList)
                 if(saleperson.getType().equalsIgnoreCase(reimbursements.getType()))
@@ -122,42 +122,41 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
 
         System.out.println("\nexcess"); //debug
         for(SalePerson i: salePersonArrayList)
-            System.out.printf("%s  %,d %,d\n", i.getName(), i.getTravelExcess(), i.getMobileExcess());
+            System.out.printf("%-10s  %,-10d %,-10d\n", i.getName(), i.getTravelExcess(), i.getMobileExcess());
 
-        /*
-        //-----------------------------------------Total commission------------------------------------------------//
+
+        //------------------------------------Total commission&payment------------------------------------------------//
 
         for(SalePerson person: salePersonArrayList){
             for (Product product: productArrayList){
-                double totalCommission = 0;
+                int totalCommission = 0;
                 if(person.getProductCode().equalsIgnoreCase(product.getCode())){
                     int[] quarterlyUnit = person.getQuarterlyUnit();
                     int[] quarterlyComm = product.getQuarterlyComm();
                     switch (person.getType().toLowerCase().charAt(0)){
                         case ('c') :
                             for(int i = 0; i < quarterlyUnit.length; i++)
-                                totalCommission += quarterlyUnit[i]* product.getPrice()*((double) quarterlyComm[i] /100);
+                                totalCommission +=  quarterlyUnit[i]* product.getPrice() * quarterlyComm[i] /100;
                             break;
                         case ('s') :
-                            totalCommission += person.getSalary();
-                            for (int unit : quarterlyUnit)
-                                totalCommission += unit * ((double) product.getFlatComm() / 100);
+                            totalCommission += product.getPrice() * person.getTotalUnit() * product.getFlatComm() / 100;
                             break;
                         default: break;
                     }
-                    person.setTotalCommission((int)totalCommission);
+                    person.setTotalCommission(totalCommission);
+                    person.setTotalPayment();
                 }
             }
         }
         System.out.println();
         System.out.println("\ntotal commission"); //debug
         for(SalePerson person: salePersonArrayList)
-            System.out.printf("%s  %,d \n", person.getName(), person.getTotalCommission());
-        */
+            System.out.printf("%-10s  total comm = %,-10d total pay = %,-10d\n", person.getName(), person.getTotalCommission(), person.getTotalPayment());
+
         Collections.sort(salePersonArrayList);
         System.out.println();
         for(SalePerson person: salePersonArrayList){
-                System.out.printf("%-10s %-5s %,-10d unit\n", person.getName(), person.getProductCode(), person.getTotalUnit());
+                System.out.printf("%-10s %-5s %,-5d unit\n", person.getName(), person.getProductCode(), person.getTotalUnit());
         }
     }
 }

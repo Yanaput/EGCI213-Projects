@@ -56,6 +56,7 @@ public class SalePerson implements Comparable<SalePerson> {
     protected int getTravelExcess(){return this.travelExcess;}
     protected int getMobileExcess(){return this.mobileExcess;}
     protected int getTotalCommission(){return this.totalCommission;}
+    protected int getTotalPayment(){return this.totalPayment;}
     protected void setExpenses(int travelExpense, int mobileExpense){
         this.travelExpense += travelExpense;
         this.mobileExpense += mobileExpense;
@@ -66,6 +67,9 @@ public class SalePerson implements Comparable<SalePerson> {
         this.mobileExcess = (this.mobileExpense > mobileExcess) ? this.mobileExpense - mobileExcess : 0;
     }
 
+    protected void setTotalPayment(){
+        this.totalPayment = this.salary * 12 + this.totalCommission - this.mobileExcess - this.travelExcess;
+    }
     protected void setTotalCommission(int totalCommission){this.totalCommission = totalCommission;}
 
 
