@@ -49,7 +49,7 @@ public class SalePerson implements Comparable<SalePerson> {
     protected int getQ4Unit(){return this.q4Unit;}
     protected int[] getQuarterlyUnit(){return new int[]{this.q1Unit, this.q2Unit, this.q3Unit, this.q4Unit};}
 
-    protected int getSalary(){return this.salary;}
+    protected int getSalary(){return this.salary*12;}
     protected int getTotalUnit(){return this.totalUnit;}
     protected int getTravelExpense(){return this.travelExpense;}
     protected int getMobileExpense(){return this.mobileExpense;}
