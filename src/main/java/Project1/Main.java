@@ -162,52 +162,44 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
 
         System.out.println();
         System.out.println("\n" + "=".repeat(10) + " Summary " + "=".repeat(10) + "\n");
-        int totalAC = 0;
-        int totalST = 0;
-        int totalRV = 0;
-        int totalPricesAC = 0;
-        int totalPricesST = 0;
-        int totalPricesRV = 0;
-        List<String> nameAC = new ArrayList<>();
-        List<String> nameST = new ArrayList<>();
-        List<String> nameRV = new ArrayList<>();
-        int highestA = 0;
-        int highestS = 0;
-        int highestR = 0;
+        int totalAC = 0, totalST = 0, totalRV = 0, totalPricesAC = 0, totalPricesST = 0,
+                totalPricesRV = 0, highestA = 0, highestS = 0, highestR = 0;
+        ArrayList<String> nameAC = new ArrayList<>();
+        ArrayList<String> nameST = new ArrayList<>();
+        ArrayList<String> nameRV = new ArrayList<>();
+
         for (SalePerson person : salePersonArrayList) {
             for (Product product : productArrayList) {
                 if (person.getProductCode().equalsIgnoreCase(product.getCode())) {
-                    int tem = person.getTotalUnit();
+                    int temp = person.getTotalUnit();
                     switch (person.getProductCode()) {
                         case ("AC"):
                             totalAC += person.getTotalUnit();
-                            totalPricesAC = product.getPrice() * totalAC;
-                            if (tem > highestA) {
-                                highestA = tem;
+                            if (temp > highestA) {
+                                highestA = temp;
                                 nameAC.add(person.getName());
                             }
-                            else if (tem == highestA){
+                            else if (temp == highestA){
                                 nameAC.add(person.getName());
                             }
                             break;
                         case ("ST"):
                             totalST += person.getTotalUnit();
-                            totalPricesST = product.getPrice() * totalST;
-                            if (tem > highestS) {
-                                highestS = tem;
+                            if (temp > highestS) {
+                                highestS = temp;
                                 nameST.add(person.getName());
                             }
-                            else if (tem == highestS){
+                            else if (temp == highestS){
                                 nameST.add(person.getName());
                             }
-                            break; case ("RV"):
+                            break;
+                        case ("RV"):
                             totalRV += person.getTotalUnit();
-                            totalPricesRV = product.getPrice() * totalRV;
-                            if (tem > highestR) {
-                                highestR = tem;
+                            if (temp > highestR) {
+                                highestR = temp;
                                 nameRV.add(person.getName());
                             }
-                            else if (tem == highestR) {
+                            else if (temp == highestR) {
                                 nameRV.add(person.getName());
                             }
                             break;
@@ -215,6 +207,14 @@ public class Main {     //TODO : add printing format, assign totalPayment to eac
                             break;
                     }
                 }
+            }
+        }
+
+        for(Product product: productArrayList){
+            switch (product.getCode().toLowerCase()){
+                case ("ac") -> totalPricesAC =  product.getPrice() * totalAC;
+                case ("st") -> totalPricesST =  product.getPrice() * totalST;
+                case ("rv") -> totalPricesRV =  product.getPrice() * totalRV;
             }
         }
 
