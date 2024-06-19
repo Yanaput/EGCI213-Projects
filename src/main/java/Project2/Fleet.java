@@ -9,4 +9,6 @@ public class Fleet {
         this.minLoad = maxLoad/2;
         this.totalVehicle = totalVehicle;
     }
+
+
 }

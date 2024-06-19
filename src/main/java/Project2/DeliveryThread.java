@@ -1,10 +1,15 @@
 package Project2;
 
+import java.util.concurrent.CyclicBarrier;
+
 public class DeliveryThread extends Thread{
-    private DeliveryShop shop;
-    public DeliveryThread(String name, Fleet fleet){
+    CyclicBarrier barrier;
+    public DeliveryThread(String name){
         super(name);
-        this.shop = new DeliveryShop(fleet);
+    }
+
+    protected void setBarrier(CyclicBarrier barrier){
+        this.barrier = barrier;
     }
 
     @Override
