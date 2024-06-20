@@ -7,10 +7,10 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
     private Fleet fleet;
     private DeliveryThread thread;
     private int totalReceived, totalDelivered, remainingParcels;
-    public DeliveryShop(String name, Fleet fleet, CyclicBarrier barrier){
+    public DeliveryShop(String name, Fleet fleet, CyclicBarrier barrier, int days){
         this.fleet = fleet;
         this.name = name;
-        this.thread = new DeliveryThread(name);
+        this.thread = new DeliveryThread(name, days, this);
         this.thread.setBarrier(barrier);
     }
 
@@ -21,10 +21,15 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
 
     @Override
     public int compareTo(DeliveryShop other) {
-        return Double.compare( (double)this.totalDelivered/this.totalReceived, (double)other.totalDelivered/other.totalReceived);
+        return Double.compare( (double)other.totalDelivered/other.totalReceived,
+                (double)this.totalDelivered/this.totalReceived);
     }
 
-    protected DeliveryThread getThread(){
-        return this.thread;
+    protected DeliveryThread getThread(){return this.thread;}
+    protected Fleet getFleet(){return this.fleet;}
+    protected int getRemainingParcels(){return this.remainingParcels;}
+    protected void deliver(int delivered){
+        this.remainingParcels -= delivered;
+        this.totalDelivered += delivered;
     }
 }

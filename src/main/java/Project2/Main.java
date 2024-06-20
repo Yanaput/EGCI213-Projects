@@ -4,6 +4,7 @@ import java.io.File;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 
 public class Main {
@@ -48,11 +49,11 @@ public class Main {
             }
         }
 
-        CyclicBarrier barrier = new CyclicBarrier(deliByBike + deliByTruck + sellerNum);
+        CyclicBarrier barrier = new CyclicBarrier(deliByBike + deliByTruck + sellerNum +1);
 
         ArrayList<SellerThread> sellerThreads = new ArrayList<>();
         for (int i = 0; i < sellerNum; i++) {
-            sellerThreads.add(new SellerThread("Seller_" + i, maxDrop));
+            sellerThreads.add(new SellerThread("Seller_" + i, maxDrop, days));
         }
         for (SellerThread thread : sellerThreads)
             thread.setBarrier(barrier);
@@ -62,16 +63,34 @@ public class Main {
 
         ArrayList<DeliveryShop> shopArrayList = new ArrayList<>();
         for (int i = 0; i < deliByBike; i++)
-            shopArrayList.add(new DeliveryShop("BikeDelivery_" + i, bike, barrier));
+            shopArrayList.add(new DeliveryShop("BikeDelivery_" + i, bike, barrier, days));
 
         for (int i = 0; i < deliByTruck; i++)
-            shopArrayList.add(new DeliveryShop("TruckDelivery_" + i, truck, barrier));
+            shopArrayList.add(new DeliveryShop("TruckDelivery_" + i, truck, barrier, days));
 
         for (DeliveryShop shop : shopArrayList)
             shop.getThread().start();
 
         for (SellerThread thread : sellerThreads)
             thread.start();
+
+        for(int i = 1; i <= days; i++) {
+            int temp = -1;
+            try {
+                temp = barrier.await();
+            } catch (Exception e) { }
+
+            if (temp == barrier.getParties() - 1)
+                System.out.printf("%10s  >>  Day  %d\n", Thread.currentThread().getName(), i);
+            try {
+                temp = barrier.await();
+            } catch (Exception e) { }
+
+            try {
+                temp = barrier.await();
+            } catch (Exception e) { }
+        }
+
     }
 }
 

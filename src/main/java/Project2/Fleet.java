@@ -10,5 +10,8 @@ public class Fleet {
         this.totalVehicle = totalVehicle;
     }
 
+    protected int getMaxLoad(){return this.maxLoad;}
+    protected int getMinLoad(){return this.minLoad;}
+    protected int getTotalVehicle(){return this.totalVehicle;}
 
 }
