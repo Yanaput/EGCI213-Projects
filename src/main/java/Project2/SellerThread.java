@@ -29,7 +29,7 @@ public class SellerThread extends Thread{
         int random = new Random().nextInt(0,maxDrop+1);
         randomShop();
         this.shop.received(random);
-        System.out.printf("%15s  >>  drop %5d %15s\n",Thread.currentThread().getName(), random, shop.getThread().getName());
+        System.out.printf("%15s  >>  drop %3d parcels at %15s  shop\n",Thread.currentThread().getName(), random, shop.getThread().getName());
     }
 
     private int barrierWait(){
@@ -45,10 +45,11 @@ public class SellerThread extends Thread{
         for(int i = 1; i <= days; i++) {
             int temp = barrierWait();
             if(temp == barrier.getParties()-1){
+                System.out.printf("%15s  >>\n",Thread.currentThread().getName());
                 System.out.printf("%15s  >> %s\n",Thread.currentThread().getName(), "=".repeat(15));
                 System.out.printf("%15s  >>  Day  %d\n",Thread.currentThread().getName(), i);
             }
-
+            barrierWait();
             drop();
             barrierWait();
 

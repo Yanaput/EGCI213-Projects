@@ -79,9 +79,14 @@ public class Main {
             } catch (Exception e) { }
 
             if (temp == barrier.getParties() - 1){
+                System.out.printf("%15s  >>\n",Thread.currentThread().getName());
                 System.out.printf("%15s  >> %s\n",Thread.currentThread().getName(), "=".repeat(15));
                 System.out.printf("%15s  >>  Day  %d\n", Thread.currentThread().getName(), i);
             }
+            try { //wait for day printing
+                barrier.await();
+            } catch (Exception e) { }
+
             try { //wait for seller drop
                 barrier.await();
             } catch (Exception e) { }
@@ -95,6 +100,14 @@ public class Main {
             } catch (Exception e) { }
         }
 
+        Collections.sort(shopArrayList);
+        System.out.printf("%15s >> \n",Thread.currentThread().getName());
+        System.out.printf("%15s >> %s\n",Thread.currentThread().getName(),"=".repeat(15));
+        System.out.printf("%15s >> summary\n",Thread.currentThread().getName());
+        for(DeliveryShop shop: shopArrayList)
+            System.out.printf("%15s >>  %-15s received = %4d, delivered = %4d, success rate = %4.2f\n",
+                    Thread.currentThread().getName(), shop.getName(), shop.getTotalReceived(),
+                    shop.getTotalDelivered()  , shop.getSuccessRate());
     }
 }
 

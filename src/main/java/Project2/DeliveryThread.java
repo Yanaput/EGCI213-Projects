@@ -17,7 +17,7 @@ public class DeliveryThread extends Thread{
     }
 
     synchronized private void reportRemaining(){
-        System.out.printf("%15s  >> parcels to deliver = %5d\n",Thread.currentThread().getName(),
+        System.out.printf("%15s  >>  parcels to deliver = %5d\n",Thread.currentThread().getName(),
                 this.shop.getRemainingParcels());
     }
 
@@ -32,8 +32,10 @@ public class DeliveryThread extends Thread{
 
         }
         this.shop.deliver(totalDeliver);
-        System.out.printf("%15s  >> delivered = %5d by %3d %7s, parcels remain = %5d\n",Thread.currentThread().getName(),
-                totalDeliver, vehiclesNum, this.shop.getFleet().getVehicle().toLowerCase()+"s" ,this.shop.getRemainingParcels());
+        String vehicleName = this.shop.getFleet().getVehicle().toLowerCase()+"s";
+        System.out.printf("%15s  >>  delivered = %3d by %3d %-10s, remaining parcels = %3d, remaining %-6s = %3d\n",
+                Thread.currentThread().getName(), totalDeliver, vehiclesNum, vehicleName ,
+                this.shop.getRemainingParcels(), vehicleName, this.shop.getFleet().getTotalVehicle() - vehiclesNum );
     }
 
     private int barrierWait(){
@@ -49,9 +51,11 @@ public class DeliveryThread extends Thread{
         for(int i = 1; i <= days; i++) {
             int temp = barrierWait();
             if(temp == barrier.getParties()-1){
+                System.out.printf("%15s  >>\n",Thread.currentThread().getName());
                 System.out.printf("%15s  >> %s\n",Thread.currentThread().getName(), "=".repeat(15));
                 System.out.printf("%15s  >>  Day  %d\n",Thread.currentThread().getName(), i);
             }
+            barrierWait();
             barrierWait(); //wait for seller drop
 
             reportRemaining();
