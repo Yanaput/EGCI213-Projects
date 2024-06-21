@@ -26,7 +26,7 @@ public class SellerThread extends Thread{
     }
 
     synchronized private void drop(){
-        int random = new Random().nextInt(0,maxDrop+1);
+        int random = new Random().nextInt(1,maxDrop+1);
         randomShop();
         this.shop.received(random);
         System.out.printf("%15s  >>  drop %3d parcels at %15s  shop\n",Thread.currentThread().getName(), random, shop.getThread().getName());
