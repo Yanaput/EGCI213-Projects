@@ -82,8 +82,12 @@ public class Main {
 
         System.out.printf("%15s  >>  %s Parameters %s\n",Thread.currentThread().getName(), "=".repeat(15), "=".repeat(15));
         System.out.printf("%15s  >>  days of simulation = %2d\n",Thread.currentThread().getName(), days);
-        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n", Thread.currentThread().getName(), bike.getVehicle(), bike.getVehicle().toLowerCase()+"s", bike.getTotalVehicle(), bike.getMaxLoad(), bike.getMinLoad());
-        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n", Thread.currentThread().getName(), truck.getVehicle(), truck.getVehicle().toLowerCase()+"s", truck.getTotalVehicle(), truck.getMaxLoad(), truck.getMinLoad());
+        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n",
+                Thread.currentThread().getName(), bike.getVehicle(), bike.getVehicle().toLowerCase()+"s",
+                bike.getTotalVehicle(), bike.getMaxLoad(), bike.getMinLoad());
+        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n",
+                Thread.currentThread().getName(), truck.getVehicle(), truck.getVehicle().toLowerCase()+"s",
+                truck.getTotalVehicle(), truck.getMaxLoad(), truck.getMinLoad());
         System.out.printf("%15s  >>  SellerThreads = [%s]\n",Thread.currentThread().getName() ,sellName);
         System.out.printf("%15s  >>  max parcel drop = %d\n",Thread.currentThread().getName() ,maxDrop);
         System.out.printf("%15s  >>  DeliveryThreads = [%s]\n",Thread.currentThread().getName() ,deliveryName);
@@ -120,6 +124,15 @@ public class Main {
             try { //wait for delivery deliver
                 barrier.await();
             } catch (Exception e) { }
+        }
+
+        try{
+            for (DeliveryShop shop : shopArrayList)
+                shop.getThread().join();
+            for (SellerThread thread : sellerThreads)
+                thread.join();
+        }catch (Exception e){
+            System.err.println(e);
         }
 
         Collections.sort(shopArrayList);
