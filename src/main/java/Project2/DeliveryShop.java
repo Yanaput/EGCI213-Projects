@@ -15,7 +15,7 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
         this.thread.setBarrier(barrier);
     }
 
-    protected void received(int parcelsNumber){
+    synchronized protected void received(int parcelsNumber){
         this.remainingParcels += parcelsNumber;
         this.totalReceived += parcelsNumber;
     }
@@ -27,7 +27,13 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
     }
 
     private void calSuccessRate(){
-        this.successRate = (double)this.totalDelivered/this.totalReceived;
+        this.successRate = (double)this.totalDelivered/(double)this.totalReceived;
+    }
+
+    public void reportSummary(){
+        System.out.printf("%15s >>  %-15s received = %4d, delivered = %4d, success rate = %4.2f\n",
+                Thread.currentThread().getName(), this.getName(), this.getTotalReceived(),
+                this.getTotalDelivered()  , this.getSuccessRate());
     }
 
     protected int getTotalReceived(){return this.totalReceived;}
@@ -37,6 +43,7 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
     protected DeliveryThread getThread(){return this.thread;}
     protected Fleet getFleet(){return this.fleet;}
     protected int getRemainingParcels(){return this.remainingParcels;}
+
     protected void deliver(int delivered){
         this.remainingParcels -= delivered;
         this.totalDelivered += delivered;

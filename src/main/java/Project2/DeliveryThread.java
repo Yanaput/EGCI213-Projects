@@ -17,23 +17,24 @@ public class DeliveryThread extends Thread{
     }
 
     synchronized private void reportRemaining(){
-        System.out.printf("%15s  >>  parcels to deliver = %5d\n",Thread.currentThread().getName(),
+        System.out.printf("%15s  >>      parcels to deliver = %4d\n",Thread.currentThread().getName(),
                 this.shop.getRemainingParcels());
     }
 
     synchronized private void deliver(){
-        int vehiclesNum = this.shop.getRemainingParcels()/this.shop.getFleet().getMaxLoad();
-        vehiclesNum = Math.min(vehiclesNum, this.shop.getFleet().getTotalVehicle());
+        int vehiclesNum = Math.min(this.shop.getRemainingParcels()/this.shop.getFleet().getMaxLoad(),
+                this.shop.getFleet().getTotalVehicle());
+
         int totalDeliver = vehiclesNum * this.shop.getFleet().getMaxLoad();
+
         if(this.shop.getRemainingParcels()%this.shop.getFleet().getMaxLoad() > this.shop.getFleet().getMinLoad()
         && vehiclesNum < this.shop.getFleet().getTotalVehicle()){
                 vehiclesNum++;
                 totalDeliver += this.shop.getRemainingParcels()%this.shop.getFleet().getMaxLoad();
-
         }
         this.shop.deliver(totalDeliver);
         String vehicleName = this.shop.getFleet().getVehicle().toLowerCase()+"s";
-        System.out.printf("%15s  >>  delivered = %3d by %3d %-10s, remaining parcels = %3d, remaining %-6s = %3d\n",
+        System.out.printf("%15s  >>  delivered = %3d by %3d %-10s remaining parcels = %3d, remaining %-6s = %3d\n",
                 Thread.currentThread().getName(), totalDeliver, vehiclesNum, vehicleName ,
                 this.shop.getRemainingParcels(), vehicleName, this.shop.getFleet().getTotalVehicle() - vehiclesNum );
     }

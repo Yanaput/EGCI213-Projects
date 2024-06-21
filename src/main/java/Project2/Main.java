@@ -46,7 +46,12 @@ public class Main {
             }
         }
 
+
+
         CyclicBarrier barrier = new CyclicBarrier(deliByBike + deliByTruck + sellerNum +1);
+
+        ArrayList<String> sellThreadName = new ArrayList<>();
+        ArrayList<String> deliveryThreadName = new ArrayList<>();
 
 
         Fleet bike = new Fleet("Bike", bikeMaxLoad, bikeNum);
@@ -59,15 +64,32 @@ public class Main {
         for (int i = 0; i < deliByTruck; i++)
             shopArrayList.add(new DeliveryShop("TruckDelivery_" + i, truck, barrier, days));
 
-        for (DeliveryShop shop : shopArrayList)
-            shop.getThread().start();
-
         ArrayList<SellerThread> sellerThreads = new ArrayList<>();
         for (int i = 0; i < sellerNum; i++) {
             sellerThreads.add(new SellerThread("Seller_" + i, maxDrop, days, shopArrayList));
         }
-        for (SellerThread thread : sellerThreads)
+        for (SellerThread thread : sellerThreads){
+            sellThreadName.add(thread.getName());
             thread.setBarrier(barrier);
+        }
+
+        for (DeliveryShop shop : shopArrayList){
+            deliveryThreadName.add(shop.getThread().getName());
+        }
+
+        String sellName = String.join(", ", sellThreadName);
+        String deliveryName = String.join(", ", deliveryThreadName);
+
+        System.out.printf("%15s  >>  %s Parameters %s\n",Thread.currentThread().getName(), "=".repeat(15), "=".repeat(15));
+        System.out.printf("%15s  >>  days of simulation = %2d\n",Thread.currentThread().getName(), days);
+        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n", Thread.currentThread().getName(), bike.getVehicle(), bike.getVehicle().toLowerCase()+"s", bike.getTotalVehicle(), bike.getMaxLoad(), bike.getMinLoad());
+        System.out.printf("%15s  >>  %-5s, total %-6s = %3d, max_load = %4d parcels, min_load = %4d parcels\n", Thread.currentThread().getName(), truck.getVehicle(), truck.getVehicle().toLowerCase()+"s", truck.getTotalVehicle(), truck.getMaxLoad(), truck.getMinLoad());
+        System.out.printf("%15s  >>  SellerThreads = [%s]\n",Thread.currentThread().getName() ,sellName);
+        System.out.printf("%15s  >>  max parcel drop = %d\n",Thread.currentThread().getName() ,maxDrop);
+        System.out.printf("%15s  >>  DeliveryThreads = [%s]\n",Thread.currentThread().getName() ,deliveryName);
+
+        for (DeliveryShop shop : shopArrayList)
+            shop.getThread().start();
 
         for (SellerThread thread : sellerThreads)
             thread.start();
@@ -105,9 +127,7 @@ public class Main {
         System.out.printf("%15s >> %s\n",Thread.currentThread().getName(),"=".repeat(15));
         System.out.printf("%15s >> summary\n",Thread.currentThread().getName());
         for(DeliveryShop shop: shopArrayList)
-            System.out.printf("%15s >>  %-15s received = %4d, delivered = %4d, success rate = %4.2f\n",
-                    Thread.currentThread().getName(), shop.getName(), shop.getTotalReceived(),
-                    shop.getTotalDelivered()  , shop.getSuccessRate());
+           shop.reportSummary();
     }
 }
 

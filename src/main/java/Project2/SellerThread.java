@@ -21,7 +21,7 @@ public class SellerThread extends Thread{
         this.barrier = barrier;
     }
 
-    private void randomShop(){
+    synchronized private void randomShop(){
         this.shop = allShops.get(new Random().nextInt(0, allShops.size()));
     }
 
@@ -29,7 +29,7 @@ public class SellerThread extends Thread{
         int random = new Random().nextInt(1,maxDrop+1);
         randomShop();
         this.shop.received(random);
-        System.out.printf("%15s  >>  drop %3d parcels at %15s  shop\n",Thread.currentThread().getName(), random, shop.getThread().getName());
+        System.out.printf("%15s  >>  drop %3d parcels at %-15s  shop\n",Thread.currentThread().getName(), random, shop.getThread().getName());
     }
 
     private int barrierWait(){
