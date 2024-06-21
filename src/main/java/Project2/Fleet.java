@@ -13,5 +13,5 @@ public class Fleet {
     protected int getMaxLoad(){return this.maxLoad;}
     protected int getMinLoad(){return this.minLoad;}
     protected int getTotalVehicle(){return this.totalVehicle;}
-
+    protected String getVehicle(){return this.vehicle;}
 }

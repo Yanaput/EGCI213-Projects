@@ -1,11 +1,8 @@
 package Project2;
 
-import java.io.File;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.concurrent.BrokenBarrierException;
-import java.util.concurrent.CyclicBarrier;
+import java.io.*;
+import java.util.*;
+import java.util.concurrent.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -51,12 +48,6 @@ public class Main {
 
         CyclicBarrier barrier = new CyclicBarrier(deliByBike + deliByTruck + sellerNum +1);
 
-        ArrayList<SellerThread> sellerThreads = new ArrayList<>();
-        for (int i = 0; i < sellerNum; i++) {
-            sellerThreads.add(new SellerThread("Seller_" + i, maxDrop, days));
-        }
-        for (SellerThread thread : sellerThreads)
-            thread.setBarrier(barrier);
 
         Fleet bike = new Fleet("Bike", bikeMaxLoad, bikeNum);
         Fleet truck = new Fleet("Truck", truckMaxLoad, truckNum);
@@ -71,6 +62,13 @@ public class Main {
         for (DeliveryShop shop : shopArrayList)
             shop.getThread().start();
 
+        ArrayList<SellerThread> sellerThreads = new ArrayList<>();
+        for (int i = 0; i < sellerNum; i++) {
+            sellerThreads.add(new SellerThread("Seller_" + i, maxDrop, days, shopArrayList));
+        }
+        for (SellerThread thread : sellerThreads)
+            thread.setBarrier(barrier);
+
         for (SellerThread thread : sellerThreads)
             thread.start();
 
@@ -80,14 +78,20 @@ public class Main {
                 temp = barrier.await();
             } catch (Exception e) { }
 
-            if (temp == barrier.getParties() - 1)
-                System.out.printf("%10s  >>  Day  %d\n", Thread.currentThread().getName(), i);
-            try {
-                temp = barrier.await();
+            if (temp == barrier.getParties() - 1){
+                System.out.printf("%15s  >> %s\n",Thread.currentThread().getName(), "=".repeat(15));
+                System.out.printf("%15s  >>  Day  %d\n", Thread.currentThread().getName(), i);
+            }
+            try { //wait for seller drop
+                barrier.await();
             } catch (Exception e) { }
 
-            try {
-                temp = barrier.await();
+            try { //wait for delivery report
+                barrier.await();
+            } catch (Exception e) { }
+
+            try { //wait for delivery deliver
+                barrier.await();
             } catch (Exception e) { }
         }
 
