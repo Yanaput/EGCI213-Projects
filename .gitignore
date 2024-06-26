@@ -42,3 +42,4 @@ build/
 ### Ignoring assignment files ###
 *.zip
 *.pdf
+/src/main/java/*/README.txt

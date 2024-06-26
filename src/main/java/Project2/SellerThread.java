@@ -1,7 +1,6 @@
 package Project2;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.*;
 
 public class SellerThread extends Thread{
@@ -25,7 +24,7 @@ public class SellerThread extends Thread{
         this.shop = allShops.get(new Random().nextInt(0, allShops.size()));
     }
 
-    synchronized private void drop(){
+     private void drop(){
         int random = new Random().nextInt(1,maxDrop+1);
         randomShop();
         this.shop.received(random);

@@ -22,8 +22,8 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
 
     @Override
     public int compareTo(DeliveryShop other) {
-        return Double.compare( other.successRate,
-                this.successRate);
+        int successCompare = Double.compare( other.successRate, this.successRate);
+        return (successCompare != 0) ? successCompare : this.getName().compareToIgnoreCase(other.getName());
     }
 
     private void calSuccessRate(){
