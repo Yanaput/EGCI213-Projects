@@ -31,7 +31,7 @@ public class DeliveryShop implements Comparable<DeliveryShop>{
     }
 
     public void reportSummary(){
-        System.out.printf("%15s >>  %-15s received = %4d, delivered = %4d, success rate = %4.2f\n",
+        System.out.printf("%15s >>  %-15s received = %4d, delivered = %4d, success rate = %4.4f\n",
                 Thread.currentThread().getName(), this.getName(), this.getTotalReceived(),
                 this.getTotalDelivered()  , this.getSuccessRate());
     }
