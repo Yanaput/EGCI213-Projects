@@ -1,7 +1,9 @@
 package Project3;
 
+import javax.swing.*;
+
 public class PathFindSim {
     public static void main(String[] args) {
-        MainMenu startPage = new MainMenu();
+        JFrame startPage = new AlgoPage();
     }
 }
