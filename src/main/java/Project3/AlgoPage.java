@@ -4,7 +4,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class AlgoPage extends JFrame {
-    public AlgoPage() {
+
+    private Graph graph;
+    private IAlgorithm algorithm;
+
+    public AlgoPage(int row, int columns) {
         super("PathFindSim");
 
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -21,5 +25,18 @@ public class AlgoPage extends JFrame {
         this.add(new AlgoPagePanel(pageSize));
         this.setVisible(true);
 
+        this.graph = new Graph(row, columns);
+    }
+
+    public void setAlgorithm(IAlgorithm algorithm) {
+        this.algorithm = algorithm;
+    }
+
+    public void step() {
+        algorithm.step();
+    }
+
+    public void reset() {
+        algorithm.reset();
     }
 }
