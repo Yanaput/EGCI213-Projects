@@ -6,6 +6,7 @@ import java.awt.event.*;
 import java.util.*;
 
 public class SetUpMenuPanel extends JPanel {
+    SetUpMenu parentFrame;
     private JTextArea gridRows, gridCols;
     private JLabel img;
 
@@ -20,7 +21,8 @@ public class SetUpMenuPanel extends JPanel {
 
     private JButton backButton, nextButton;
 
-    public SetUpMenuPanel(int menuWidth, int menuHeight){
+    public SetUpMenuPanel(int menuWidth, int menuHeight, SetUpMenu parentFrame){
+        this.parentFrame = parentFrame;
         this.setPreferredSize(new Dimension(menuWidth, menuHeight));
         this.setLayout(null);
 
@@ -106,8 +108,8 @@ public class SetUpMenuPanel extends JPanel {
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Window window = SwingUtilities.getWindowAncestor(SetUpMenuPanel.this);
-                window.dispose();
+                System.out.println("Back");
+                parentFrame.dispose();
                 new PathFindSim();
             }
         });

@@ -54,7 +54,7 @@ public class Graph {
    public void makeWallNode(int y, int x) {
        if (!isInBound(y, x)) return;
        for(int dir: GraphNode.DIRECTIONS) {
-           this.nodeArr[y][x].direction.disableDirection();
+//           this.nodeArr[y][x].direction.disableDirection();
        }
    }
 }
