@@ -156,6 +156,7 @@ public class SetUpMenuPanel extends JPanel {
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                new AlgoPage(rowsCount, colsCount, pathFindComponentsColors);
                 System.out.println(colsCount);
                 System.out.println(rowsCount);
                 for(Color color: pathFindComponentsColors)

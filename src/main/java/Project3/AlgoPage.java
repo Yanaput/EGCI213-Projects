@@ -7,9 +7,11 @@ public class AlgoPage extends JFrame {
 
    private Graph graph;
    private IAlgorithm algorithm;
+   private Color[] componentColours;
 
-   public AlgoPage(int row, int columns) {
+   public AlgoPage(int row, int columns, Color[] componentColours) {
        super("PathFindSim");
+       this.componentColours = componentColours;
 
        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
        Insets inset = Toolkit.getDefaultToolkit().getScreenInsets(getGraphicsConfiguration());
