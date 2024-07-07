@@ -12,8 +12,8 @@ public class PathFindSim extends JFrame implements MouseListener {
     private JLabel contentPane;
 
     public static void main(String[] args) {
-//        new PathFindSim();
-        new AlgoPage(25, 50);
+        new PathFindSim();
+//        new AlgoPage(25, 50);
     }
 
     public PathFindSim() {

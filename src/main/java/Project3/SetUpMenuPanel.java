@@ -11,16 +11,27 @@ public class SetUpMenuPanel extends JPanel {
     SetUpMenu parentFrame;
     private JTextArea gridRows, gridCols;
 
-    private String[] colors = {
-            "Red", "Green", "Blue", "Black", "Yellow"
+    private Color[] colors = {
+            UIConstants.Black,
+            UIConstants.White,
+            UIConstants.LightRed,
+            UIConstants.DarkRed,
+            UIConstants.Green,
+            UIConstants.LightYellow,
+            UIConstants.DarkYellow,
+            UIConstants.Blue,
+            UIConstants.Magenta,
+            UIConstants.Cyan,
+            UIConstants.GutterGrey,
+            UIConstants.CommentGrey
     };
 
     private String[] pathFindComponents = {
             "Wall", "Search", "Path", "Start", "Goal"
     };
 
-    private String[] pathFindComponentsColors = new String[pathFindComponents.length];
-    private JToggleButton[][] toggleButtons = new JToggleButton[pathFindComponents.length][colors.length];
+    private Color[] pathFindComponentsColors = new Color[pathFindComponents.length];
+    private ColorRadioButton[][] toggleButtons = new ColorRadioButton[pathFindComponents.length][colors.length];
 
     private JButton backButton, nextButton;
     private int rowsCount = 0, colsCount = 0;
@@ -75,13 +86,17 @@ public class SetUpMenuPanel extends JPanel {
         this.add(colorsLabel);
 
         ArrayList<JLabel> colorsLabels = new ArrayList<>();
-        for (String color : colors) {
-            colorsLabels.add(new JLabel(color));
+        for (Color color : colors) {
+            JLabel colorLabel = new JLabel("");
+            colorLabel.setBackground(color);
+            colorsLabels.add(colorLabel);
         }
 
         for (int i = 0; i < colorsLabels.size(); i++) {
-            colorsLabels.get(i).setFont(colorsLabels.get(i).getFont().deriveFont(12f));
-            colorsLabels.get(i).setBounds(50 + 70 * (i + 1), 100, 70, 30);
+            JLabel cl = colorsLabels.get(i);
+            cl.setFont(colorsLabels.get(i).getFont().deriveFont(12f));
+            cl.setBounds(90 + 30 * (i + 1), 100, 30, 30);
+            cl.setOpaque(true);
             this.add(colorsLabels.get(i));
         }
 
@@ -98,9 +113,10 @@ public class SetUpMenuPanel extends JPanel {
 
         for (int row = 0; row < pathFindComponents.length; row++) {
             for (int col = 0; col < colors.length; col++) {
-                toggleButtons[row][col] = new JRadioButton();
-                toggleButtons[row][col].setName(colors[col] + "," + pathFindComponents[row]);
-                toggleButtons[row][col].setBounds(50 + 70 * (col + 1), 100 + 30 * (row + 1), 30, 30);
+                toggleButtons[row][col] = new ColorRadioButton();
+                toggleButtons[row][col].setName(pathFindComponents[row]);
+                toggleButtons[row][col].setColor(colors[col]);
+                toggleButtons[row][col].setBounds(90 + 30 * (col + 1), 100 + 30 * (row + 1), 30, 30);
 
                 int tempRow = row;
                 int tempCol = col;
@@ -108,14 +124,14 @@ public class SetUpMenuPanel extends JPanel {
                     @Override
                     public void itemStateChanged(ItemEvent e) {
                         if (e.getStateChange() == ItemEvent.SELECTED) {
-                            System.out.println(toggleButtons[tempRow][tempCol].getName());
+                            System.out.println(toggleButtons[tempRow][tempCol].getName() + ": " + toggleButtons[tempRow][tempCol].getColor());
                             for (int i = 0; i < pathFindComponents.length; i++) {
-                                toggleButtons[tempRow][i].setSelected(i == tempCol);
+                                toggleButtons[i][tempCol].setSelected(i == tempRow);
                             }
                             for (int j = 0; j < colors.length; j++) {
-                                toggleButtons[j][tempCol].setSelected(j == tempRow);
+                                toggleButtons[tempRow][j].setSelected(j == tempCol);
                             }
-                            pathFindComponentsColors[tempRow] = toggleButtons[tempRow][tempCol].getName();
+                            pathFindComponentsColors[tempRow] = toggleButtons[tempRow][tempCol].getColor();
                         }
                     }
                 });
@@ -142,7 +158,7 @@ public class SetUpMenuPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 System.out.println(colsCount);
                 System.out.println(rowsCount);
-                for(String color: pathFindComponentsColors)
+                for(Color color: pathFindComponentsColors)
                     System.out.println(color);
                 System.out.println("Next");
             }
