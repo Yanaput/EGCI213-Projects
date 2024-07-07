@@ -49,11 +49,20 @@ public class SetUpMenuPanel extends JPanel {
         gridRows = new JTextArea(1, 8);
         gridRows.setFont(gridRows.getFont().deriveFont(18f));
         gridRows.setBounds(130, 50, 100, 30);
+        gridRows.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                validateInput(gridRows);
+            }
+        });
         gridRows.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                if(!gridRows.getText().isEmpty())
-                    rowsCount = Integer.parseInt(gridRows.getText());
+                if (!gridRows.getText().isEmpty()) {
+                    try{
+                        rowsCount = Integer.parseInt(gridRows.getText().trim());
+                    }catch (Exception err){}
+                }
             }
         });
         this.add(gridRows);
@@ -66,11 +75,20 @@ public class SetUpMenuPanel extends JPanel {
         gridCols = new JTextArea(1, 8);
         gridCols.setFont(gridCols.getFont().deriveFont(18f));
         gridCols.setBounds(350, 50, 100, 30);
+        gridCols.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                validateInput(gridCols);
+            }
+        });
         gridCols.addCaretListener(new CaretListener() {
             @Override
             public void caretUpdate(CaretEvent e) {
-                if(!gridCols.getText().isEmpty())
-                    colsCount = Integer.parseInt(gridCols.getText());
+                if(!gridCols.getText().isEmpty()){
+                    try{
+                        colsCount = Integer.parseInt(gridCols.getText().trim());
+                    }catch (Exception err){}
+                }
             }
         });
         this.add(gridCols);
@@ -156,16 +174,43 @@ public class SetUpMenuPanel extends JPanel {
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                new AlgoPage(rowsCount, colsCount, pathFindComponentsColors);
-                System.out.println(colsCount);
-                System.out.println(rowsCount);
-                for(Color color: pathFindComponentsColors)
-                    System.out.println(color);
+                if(rowsCount != 0 && colsCount != 0 && validateComponentsColors(pathFindComponentsColors)){
+                    new AlgoPage(rowsCount, colsCount, pathFindComponentsColors);
+                    parentFrame.dispose();
+                    System.out.println(colsCount);
+                    System.out.println(rowsCount);
+                    for(Color color: pathFindComponentsColors)
+                        System.out.println(color);
+                }
+                else if(rowsCount == 0 || colsCount == 0)
+                    JOptionPane.showMessageDialog(parentFrame, "Incorrect grid size",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
+
+                else if(!validateComponentsColors(pathFindComponentsColors))
+                    JOptionPane.showMessageDialog(parentFrame, "Please select all color of components",
+                            "Error", JOptionPane.INFORMATION_MESSAGE);
+
                 System.out.println("Next");
             }
         });
         nextButton.setBounds(490, menuHeight - 50, 80, 30);
         nextButton.setFont(nextButton.getFont().deriveFont(12f));
         this.add(nextButton);
+    }
+
+    private void validateInput(JTextArea textArea) {
+        String text = textArea.getText();
+        if (!text.matches("\\d*")) {
+            JOptionPane.showMessageDialog(this, "Incorrect Data Type!\nNumbers Only!",
+                    "Error", JOptionPane.INFORMATION_MESSAGE);
+            textArea.setText(text.replaceAll("\\D", ""));
+        }
+    }
+
+    private boolean validateComponentsColors(Color[] components){
+        for(Color component : components)
+            if(component == null)
+                return false;
+        return true;
     }
 }
