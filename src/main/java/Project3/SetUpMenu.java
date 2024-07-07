@@ -11,6 +11,7 @@ public class SetUpMenu extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
+        this.setBackground(UIConstants.White);
         this.setContentPane(new SetUpMenuPanel(menuWidth, menuHeight, this));
         this.pack();
         this.setVisible(true);

@@ -1,6 +1,8 @@
 package Project3;
 
 import javax.swing.*;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -8,7 +10,6 @@ import java.util.*;
 public class SetUpMenuPanel extends JPanel {
     SetUpMenu parentFrame;
     private JTextArea gridRows, gridCols;
-    private JLabel img;
 
     private String[] colors = {
             "Red", "Green", "Blue", "Black", "Yellow"
@@ -17,9 +18,12 @@ public class SetUpMenuPanel extends JPanel {
     private String[] pathFindComponents = {
             "Wall", "Search", "Path", "Start", "Goal"
     };
+
+    private String[] pathFindComponentsColors = new String[pathFindComponents.length];
     private JToggleButton[][] toggleButtons = new JToggleButton[pathFindComponents.length][colors.length];
 
     private JButton backButton, nextButton;
+    private int rowsCount = 0, colsCount = 0;
 
     public SetUpMenuPanel(int menuWidth, int menuHeight, SetUpMenu parentFrame){
         this.parentFrame = parentFrame;
@@ -34,6 +38,13 @@ public class SetUpMenuPanel extends JPanel {
         gridRows = new JTextArea(1, 8);
         gridRows.setFont(gridRows.getFont().deriveFont(18f));
         gridRows.setBounds(130, 50, 100, 30);
+        gridRows.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if(!gridRows.getText().isEmpty())
+                    rowsCount = Integer.parseInt(gridRows.getText());
+            }
+        });
         this.add(gridRows);
 
         JLabel rowsLabel = new JLabel("Rows");
@@ -44,6 +55,13 @@ public class SetUpMenuPanel extends JPanel {
         gridCols = new JTextArea(1, 8);
         gridCols.setFont(gridCols.getFont().deriveFont(18f));
         gridCols.setBounds(350, 50, 100, 30);
+        gridCols.addCaretListener(new CaretListener() {
+            @Override
+            public void caretUpdate(CaretEvent e) {
+                if(!gridCols.getText().isEmpty())
+                    colsCount = Integer.parseInt(gridCols.getText());
+            }
+        });
         this.add(gridCols);
 
         JLabel colsLabel = new JLabel("Columns");
@@ -97,6 +115,7 @@ public class SetUpMenuPanel extends JPanel {
                             for (int j = 0; j < colors.length; j++) {
                                 toggleButtons[j][tempCol].setSelected(j == tempRow);
                             }
+                            pathFindComponentsColors[tempRow] = toggleButtons[tempRow][tempCol].getName();
                         }
                     }
                 });
@@ -121,6 +140,10 @@ public class SetUpMenuPanel extends JPanel {
         nextButton.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                System.out.println(colsCount);
+                System.out.println(rowsCount);
+                for(String color: pathFindComponentsColors)
+                    System.out.println(color);
                 System.out.println("Next");
             }
         });
