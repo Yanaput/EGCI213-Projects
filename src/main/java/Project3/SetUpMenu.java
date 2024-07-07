@@ -9,11 +9,10 @@ public class SetUpMenu extends JFrame {
         super("Setup menu");
         this.setBounds(0, 0, menuWidth, menuHeight);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setLocationRelativeTo(null);
         this.setResizable(false);
         this.setContentPane(new SetUpMenuPanel(menuWidth, menuHeight, this));
-
         this.pack();
         this.setVisible(true);
     }
-
 }

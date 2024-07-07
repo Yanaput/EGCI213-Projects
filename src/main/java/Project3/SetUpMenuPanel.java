@@ -105,28 +105,26 @@ public class SetUpMenuPanel extends JPanel {
         }
 
         backButton = new JButton("Back");
-        backButton.addActionListener(new ActionListener() {
+        backButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 System.out.println("Back");
                 parentFrame.dispose();
                 new PathFindSim();
             }
         });
-        //backButton.setBounds(400, 400, 80, 30);
         backButton.setBounds(400, menuHeight - 50, 80, 30);
         backButton.setFont(backButton.getFont().deriveFont(12f));
         this.add(backButton);
 
         nextButton = new JButton("Next");
-        nextButton.addActionListener(new ActionListener() {
+        nextButton.addMouseListener(new MouseAdapter() {
             @Override
-            public void actionPerformed(ActionEvent e) {
+            public void mouseClicked(MouseEvent e) {
                 System.out.println("Next");
             }
         });
-        //nextButton.setBounds(490, 400, 80, 30);
-        nextButton.setBounds(490, menuHeight - 50, 80, 30); 
+        nextButton.setBounds(490, menuHeight - 50, 80, 30);
         nextButton.setFont(nextButton.getFont().deriveFont(12f));
         this.add(nextButton);
     }

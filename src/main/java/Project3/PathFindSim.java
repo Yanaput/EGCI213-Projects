@@ -5,7 +5,7 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class PathFindSim extends JFrame implements MouseListener {
-
+    private PathFindSim parentFrame;
     private int frameWidth = 700;
     private int frameHeight = 500;
 
@@ -16,6 +16,7 @@ public class PathFindSim extends JFrame implements MouseListener {
     }
 
     public PathFindSim() {
+        parentFrame = this;
         setTitle("Find Path Sim");
         setSize(frameWidth, frameHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -28,8 +29,8 @@ public class PathFindSim extends JFrame implements MouseListener {
         setContentPane(contentPane);
 
         JPanel panel = new JPanel(null);
-        panel.setOpaque(false); // Make the panel transparent
-        panel.setBounds(0, 0, frameWidth, frameHeight); // Ensure panel covers entire frame
+        panel.setOpaque(false);
+        panel.setBounds(0, 0, frameWidth, frameHeight);
         contentPane.add(panel);
 
         JLabel label = new JLabel("Find Path Sim");
@@ -60,7 +61,8 @@ public class PathFindSim extends JFrame implements MouseListener {
         JButton button = (JButton) e.getSource();
         String aboutText = "How to use\nwrite sth blablablaaaaaa........\nblaaaaaa banana\npotato naa";
 
-        if(button.getText().equals("Start")){            
+        if(button.getText().equals("Start")){
+            parentFrame.dispose();
             new SetUpMenu();           
         } 
         else if(button.getText().equals("About")){
