@@ -3,7 +3,8 @@ package Project3;
 import javax.swing.*;
 
 public class SetUpMenu extends JFrame {
-    private static final int menuWidth = 800, menuHeight = 600;
+    private static final int menuWidth = 600, menuHeight = 350;
+
     public SetUpMenu(){
         super("Setup menu");
         this.setBounds(0, 0, menuWidth, menuHeight);
@@ -22,8 +23,8 @@ public class SetUpMenu extends JFrame {
         window.setResizable(false);
         window.add(new SetUpMenuPanel(menuWidth, menuHeight));
 
+        window.setLocationRelativeTo(null);
         window.pack();
         window.setVisible(true);
     }
 }
-

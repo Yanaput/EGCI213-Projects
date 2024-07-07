@@ -16,8 +16,6 @@ public class SetUpMenuPanel extends JPanel {
     private String[] pathFindComponents = {
             "Wall", "Search", "Path", "Start", "Goal"
     };
-
-
     private JToggleButton[][] toggleButtons = new JToggleButton[pathFindComponents.length][colors.length];
 
     private JButton backButton, nextButton;
@@ -26,15 +24,14 @@ public class SetUpMenuPanel extends JPanel {
         this.setPreferredSize(new Dimension(menuWidth, menuHeight));
         this.setLayout(null);
 
-
         JLabel gridSizeLabel = new JLabel("Grid Size :");
         gridSizeLabel.setFont(gridSizeLabel.getFont().deriveFont(12f));
         gridSizeLabel.setBounds(50, 50, 70, 30);
         this.add(gridSizeLabel);
 
-        gridRows = new JTextArea(1,8);
+        gridRows = new JTextArea(1, 8);
         gridRows.setFont(gridRows.getFont().deriveFont(18f));
-        gridRows.setBounds(130,50, 100, 30);
+        gridRows.setBounds(130, 50, 100, 30);
         this.add(gridRows);
 
         JLabel rowsLabel = new JLabel("Rows");
@@ -42,9 +39,9 @@ public class SetUpMenuPanel extends JPanel {
         rowsLabel.setBounds(240, 50, 70, 30);
         this.add(rowsLabel);
 
-        gridCols = new JTextArea(1,8);
+        gridCols = new JTextArea(1, 8);
         gridCols.setFont(gridCols.getFont().deriveFont(18f));
-        gridCols.setBounds(350,50, 100, 30);
+        gridCols.setBounds(350, 50, 100, 30);
         this.add(gridCols);
 
         JLabel colsLabel = new JLabel("Columns");
@@ -64,50 +61,58 @@ public class SetUpMenuPanel extends JPanel {
 
         for (int i = 0; i < colorsLabels.size(); i++) {
             colorsLabels.get(i).setFont(colorsLabels.get(i).getFont().deriveFont(12f));
-            colorsLabels.get(i).setBounds(50 + 70*(i+1), 100, 70, 30);
+            colorsLabels.get(i).setBounds(50 + 70 * (i + 1), 100, 70, 30);
             this.add(colorsLabels.get(i));
         }
-        ArrayList<JLabel>pathFindLabels = new ArrayList<>();
-        for (String component : pathFindComponents)
+
+        ArrayList<JLabel> pathFindLabels = new ArrayList<>();
+        for (String component : pathFindComponents) {
             pathFindLabels.add(new JLabel(component));
+        }
 
         for (int i = 0; i < pathFindLabels.size(); i++) {
             pathFindLabels.get(i).setFont(pathFindLabels.get(i).getFont().deriveFont(12f));
-            pathFindLabels.get(i).setBounds(50, 100 + 30*(i+1), 70, 30);
+            pathFindLabels.get(i).setBounds(50, 100 + 30 * (i + 1), 70, 30);
             this.add(pathFindLabels.get(i));
         }
 
         for (int row = 0; row < pathFindComponents.length; row++) {
             for (int col = 0; col < colors.length; col++) {
                 toggleButtons[row][col] = new JRadioButton();
-                toggleButtons[row][col].setName(colors[col]+","+pathFindComponents[row]);
-                toggleButtons[row][col].setBounds(50 + 70*(col+1), 100 + 30*(row+1), 30, 30);
+                toggleButtons[row][col].setName(colors[col] + "," + pathFindComponents[row]);
+                toggleButtons[row][col].setBounds(50 + 70 * (col + 1), 100 + 30 * (row + 1), 30, 30);
 
                 int tempRow = row;
                 int tempCol = col;
                 toggleButtons[row][col].addItemListener(new ItemListener() {
                     @Override
                     public void itemStateChanged(ItemEvent e) {
-                        if (e.getStateChange() == ItemEvent.SELECTED){
+                        if (e.getStateChange() == ItemEvent.SELECTED) {
                             System.out.println(toggleButtons[tempRow][tempCol].getName());
-                            for(int i = 0; i < pathFindComponents.length; i++)
+                            for (int i = 0; i < pathFindComponents.length; i++) {
                                 toggleButtons[tempRow][i].setSelected(i == tempCol);
-                            for (int j = 0; j < colors.length; j++)
+                            }
+                            for (int j = 0; j < colors.length; j++) {
                                 toggleButtons[j][tempCol].setSelected(j == tempRow);
+                            }
                         }
                     }
                 });
                 this.add(toggleButtons[row][col]);
             }
         }
+
         backButton = new JButton("Back");
         backButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Back");
+                Window window = SwingUtilities.getWindowAncestor(SetUpMenuPanel.this);
+                window.dispose();
+                new PathFindSim();
             }
         });
-        backButton.setBounds(400, 400, 80, 30);
+        //backButton.setBounds(400, 400, 80, 30);
+        backButton.setBounds(400, menuHeight - 50, 80, 30);
         backButton.setFont(backButton.getFont().deriveFont(12f));
         this.add(backButton);
 
@@ -118,9 +123,9 @@ public class SetUpMenuPanel extends JPanel {
                 System.out.println("Next");
             }
         });
-        nextButton.setBounds(490, 400, 80, 30);
+        //nextButton.setBounds(490, 400, 80, 30);
+        nextButton.setBounds(490, menuHeight - 50, 80, 30); 
         nextButton.setFont(nextButton.getFont().deriveFont(12f));
         this.add(nextButton);
     }
 }
-
