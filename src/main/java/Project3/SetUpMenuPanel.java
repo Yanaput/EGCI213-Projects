@@ -1,8 +1,7 @@
 package Project3;
 
 import javax.swing.*;
-import javax.swing.event.CaretEvent;
-import javax.swing.event.CaretListener;
+import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -42,13 +41,14 @@ public class SetUpMenuPanel extends JPanel {
         this.setLayout(null);
 
         JLabel gridSizeLabel = new JLabel("Grid Size :");
-        gridSizeLabel.setFont(gridSizeLabel.getFont().deriveFont(12f));
-        gridSizeLabel.setBounds(50, 50, 70, 30);
+        gridSizeLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
+        gridSizeLabel.setBounds(50, 50, 90, 30);
         this.add(gridSizeLabel);
 
         gridRows = new JTextArea(1, 8);
-        gridRows.setFont(gridRows.getFont().deriveFont(18f));
+        gridRows.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 18));
         gridRows.setBounds(130, 50, 100, 30);
+        gridRows.setMargin(new Insets(5, 5, 5, 5));
         gridRows.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -68,13 +68,14 @@ public class SetUpMenuPanel extends JPanel {
         this.add(gridRows);
 
         JLabel rowsLabel = new JLabel("Rows");
-        rowsLabel.setFont(gridSizeLabel.getFont().deriveFont(12f));
+        rowsLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
         rowsLabel.setBounds(240, 50, 70, 30);
         this.add(rowsLabel);
 
         gridCols = new JTextArea(1, 8);
-        gridCols.setFont(gridCols.getFont().deriveFont(18f));
+        gridCols.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 18));
         gridCols.setBounds(350, 50, 100, 30);
+        gridCols.setMargin(new Insets(5, 5, 5, 5));
         gridCols.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
@@ -99,7 +100,7 @@ public class SetUpMenuPanel extends JPanel {
         this.add(colsLabel);
 
         JLabel colorsLabel = new JLabel("Colors : ");
-        colorsLabel.setFont(gridSizeLabel.getFont().deriveFont(12f));
+        colorsLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
         colorsLabel.setBounds(50, 100, 70, 30);
         this.add(colorsLabel);
 
@@ -112,7 +113,7 @@ public class SetUpMenuPanel extends JPanel {
 
         for (int i = 0; i < colorsLabels.size(); i++) {
             JLabel cl = colorsLabels.get(i);
-            cl.setFont(colorsLabels.get(i).getFont().deriveFont(12f));
+            cl.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
             cl.setBounds(90 + 30 * (i + 1), 100, 30, 30);
             cl.setOpaque(true);
             this.add(colorsLabels.get(i));
@@ -124,7 +125,7 @@ public class SetUpMenuPanel extends JPanel {
         }
 
         for (int i = 0; i < pathFindLabels.size(); i++) {
-            pathFindLabels.get(i).setFont(pathFindLabels.get(i).getFont().deriveFont(12f));
+            pathFindLabels.get(i).setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
             pathFindLabels.get(i).setBounds(50, 100 + 30 * (i + 1), 70, 30);
             this.add(pathFindLabels.get(i));
         }
@@ -167,7 +168,7 @@ public class SetUpMenuPanel extends JPanel {
             }
         });
         backButton.setBounds(400, menuHeight - 50, 80, 30);
-        backButton.setFont(backButton.getFont().deriveFont(12f));
+        backButton.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
         this.add(backButton);
 
         nextButton = new JButton("Next");
@@ -194,7 +195,7 @@ public class SetUpMenuPanel extends JPanel {
             }
         });
         nextButton.setBounds(490, menuHeight - 50, 80, 30);
-        nextButton.setFont(nextButton.getFont().deriveFont(12f));
+        nextButton.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
         this.add(nextButton);
     }
 

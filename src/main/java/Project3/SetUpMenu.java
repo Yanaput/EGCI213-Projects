@@ -6,7 +6,7 @@ public class SetUpMenu extends JFrame {
     private static final int menuWidth = 600, menuHeight = 350;
 
     public SetUpMenu(){
-        super("Setup menu");
+        super("Find Path Sim");
         this.setBounds(0, 0, menuWidth, menuHeight);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);

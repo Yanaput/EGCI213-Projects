@@ -35,12 +35,13 @@ public class PathFindSim extends JFrame implements MouseListener {
         contentPane.add(panel);
 
         JLabel label = new JLabel("Find Path Sim");
-        label.setFont(new Font("Arial", Font.BOLD, 31));
+        label.setFont(new Font(UIConstants.fontFamily, Font.BOLD, 31));
         Dimension labelSize = label.getPreferredSize();
         label.setBounds((frameWidth - labelSize.width) / 2, 130, labelSize.width, labelSize.height);
         panel.add(label);
 
         JButton startButton = new JButton("Start");
+        startButton.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
         startButton.setPreferredSize(new Dimension(150, 50));
         Dimension startButtonSize = startButton.getPreferredSize();
         startButton.setBounds((frameWidth - startButtonSize.width) / 2, 205, startButtonSize.width, startButtonSize.height);
@@ -48,6 +49,7 @@ public class PathFindSim extends JFrame implements MouseListener {
         panel.add(startButton);
 
         JButton aboutButton = new JButton("About");
+        aboutButton.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
         aboutButton.setPreferredSize(new Dimension(150, 50));
         Dimension aboutButtonSize = aboutButton.getPreferredSize();
         aboutButton.setBounds((frameWidth - aboutButtonSize.width) / 2, 270, aboutButtonSize.width, aboutButtonSize.height);
