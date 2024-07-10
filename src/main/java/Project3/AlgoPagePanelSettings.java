@@ -10,10 +10,8 @@ import java.awt.event.ActionListener;
 public class AlgoPagePanelSettings extends JPanel {
     private static final String [] algorithms = {"BFS", "DFS", "Dijkstra", "A*", "MST"};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
-    private JPanel simulationPanel;
 
-    public AlgoPagePanelSettings(JPanel simulationPanel, Dimension dimension){
-        this.simulationPanel = simulationPanel;
+    public AlgoPagePanelSettings(AlgoPagePanelSimulation simulationPanel, Dimension dimension){
         this.setPreferredSize(dimension);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(UIConstants.DarkBlueBackground.darker());
@@ -42,6 +40,7 @@ public class AlgoPagePanelSettings extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Play / Pause");
+                    simulationPanel.play();
                 }
             });
             controlRow.add(playButton);
@@ -51,6 +50,7 @@ public class AlgoPagePanelSettings extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Step");
+                    simulationPanel.step();
                 }
             });
             controlRow.add(stepButton);
@@ -60,6 +60,7 @@ public class AlgoPagePanelSettings extends JPanel {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Restart");
+                    simulationPanel.restart();
                 }
             });
             controlRow.add(restartButton);

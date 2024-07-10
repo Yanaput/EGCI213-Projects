@@ -8,12 +8,23 @@ import java.awt.event.MouseMotionListener;
 
 public class PanelNode extends JPanel{
 
-    public static final int BLANK    = 0;
-    public static final int WALL     = 1;
-    public static final int START    = 2;
-    public static final int GOAL     = 3;
-    public static final int SEARCH   = 4;
-    public static final int PATH     = 5;
+    public static final int BLANK       = 0;
+    public static final int WALL        = 1;
+    public static final int START       = 2;
+    public static final int GOAL        = 3;
+    public static final int SEARCH      = 4;
+    public static final int PATH        = 5;
+
+    public static final int NORTHWEST   = 0;
+    public static final int NORTH       = 1;
+    public static final int NORTHEAST   = 2;
+    public static final int WEST        = 3;
+    public static final int CENTRE      = 4;
+    public static final int EAST        = 5;
+    public static final int SOUTHWEST   = 6;
+    public static final int SOUTH       = 7;
+    public static final int SOUTHEAST   = 8;
+
     private final Color[] componentColours;
     private static final Color BLANK_COLOUR = UIConstants.GutterGrey;
 
@@ -50,6 +61,10 @@ public class PanelNode extends JPanel{
             case PanelNode.BLANK, PanelNode.GOAL -> this.setState(PanelNode.START);
             case PanelNode.START -> this.setState(PanelNode.GOAL);
         }
+    }
+
+    public void setNeighbour(PanelNode neighbour, int direction, boolean connected, int weight) {
+        if (direction == PanelNode.CENTRE) return;
     }
 
 }
