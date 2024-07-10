@@ -71,11 +71,11 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
     @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX(), y = e.getY();
-        System.out.printf("[%3d] [%3d]\n", x, y);
+//        System.out.printf("[%3d] [%3d]\n", x, y);
 
         PanelNode node = getNodeAt(x, y);
         if (node == null) return;
-        System.out.println("Click");
+//        System.out.println("Click");
         if (SwingUtilities.isRightMouseButton(e)) {
             node.setState(PanelNode.BLANK);
         } else {

@@ -46,7 +46,10 @@ public class PanelNode extends JPanel{
     }
 
     public void toggleState() {
-        this.setState(this.nodeType % 3 + 1);
+        switch(this.nodeType) {
+            case PanelNode.BLANK, PanelNode.GOAL -> this.setState(PanelNode.START);
+            case PanelNode.START -> this.setState(PanelNode.GOAL);
+        }
     }
 
 }
