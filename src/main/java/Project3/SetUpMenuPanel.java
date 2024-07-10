@@ -158,6 +158,17 @@ public class SetUpMenuPanel extends JPanel {
             }
         }
 
+        // Default values
+        Random random = new Random();
+        int r = random.nextInt() % 10 + 15;
+        gridRows.setText("" + r);
+        gridCols.setText("" + r * 16 / 9);
+        toggleButtons[0][1].setSelected(true);
+        toggleButtons[1][2].setSelected(true);
+        toggleButtons[2][4].setSelected(true);
+        toggleButtons[3][5].setSelected(true);
+        toggleButtons[4][7].setSelected(true);
+
         backButton = new JButton("Back");
         backButton.addMouseListener(new MouseAdapter() {
             @Override
