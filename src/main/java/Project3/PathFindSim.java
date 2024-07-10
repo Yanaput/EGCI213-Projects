@@ -18,7 +18,7 @@ public class PathFindSim extends JFrame implements MouseListener {
 
     public PathFindSim() {
         parentFrame = this;
-        setTitle("Find Path Sim");
+        setTitle("PathFindSim");
         setSize(frameWidth, frameHeight);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
@@ -34,7 +34,7 @@ public class PathFindSim extends JFrame implements MouseListener {
         panel.setBounds(0, 0, frameWidth, frameHeight);
         contentPane.add(panel);
 
-        JLabel label = new JLabel("Find Path Sim");
+        JLabel label = new JLabel("PathFindSim");
         label.setFont(new Font(UIConstants.fontFamily, Font.BOLD, 31));
         Dimension labelSize = label.getPreferredSize();
         label.setBounds((frameWidth - labelSize.width) / 2, 130, labelSize.width, labelSize.height);
