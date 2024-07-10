@@ -44,10 +44,6 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
         this.addMouseMotionListener(this);
     }
 
-    public Graph getGraph() {
-        return null;
-    }
-
     private PanelNode getNodeAt(int x, int y) {
         x -= this.horizontalOffset;
         y -= this.verticalOffset;

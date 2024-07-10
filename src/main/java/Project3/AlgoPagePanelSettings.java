@@ -10,8 +10,10 @@ import java.awt.event.ActionListener;
 public class AlgoPagePanelSettings extends JPanel {
     private static final String [] algorithms = {"BFS", "DFS", "Dijkstra", "A*", "MST"};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
+    private JPanel simulationPanel;
 
-    public AlgoPagePanelSettings(Dimension dimension){
+    public AlgoPagePanelSettings(JPanel simulationPanel, Dimension dimension){
+        this.simulationPanel = simulationPanel;
         this.setPreferredSize(dimension);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(UIConstants.DarkBlueBackground.darker());
