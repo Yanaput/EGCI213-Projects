@@ -7,10 +7,10 @@ public class AlgoPagePanelSettingsRow extends JPanel {
 
     public AlgoPagePanelSettingsRow() {
         this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        this.setBackground(UIConstants.Transparent);
+        this.setBackground(UIConstants.DarkBlueBackground);
     }
     public AlgoPagePanelSettingsRow(LayoutManager layout){
         this.setLayout(layout);
-        this.setBackground(UIConstants.Transparent);
+        this.setBackground(UIConstants.DarkBlueBackground);
     }
 }

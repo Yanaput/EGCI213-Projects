@@ -39,7 +39,7 @@ public class SetUpMenuPanel extends JPanel {
         this.parentFrame = parentFrame;
         this.setPreferredSize(new Dimension(menuWidth, menuHeight));
         this.setLayout(null);
-
+        this.setBackground(UIConstants.SkyBlue);
         JLabel gridSizeLabel = new JLabel("Grid Size :");
         gridSizeLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
         gridSizeLabel.setBounds(50, 50, 90, 30);
@@ -136,6 +136,7 @@ public class SetUpMenuPanel extends JPanel {
                 toggleButtons[row][col].setName(pathFindComponents[row]);
                 toggleButtons[row][col].setColor(colors[col]);
                 toggleButtons[row][col].setBounds(90 + 30 * (col + 1), 100 + 30 * (row + 1), 30, 30);
+                toggleButtons[row][col].setOpaque(false);
 
                 int tempRow = row;
                 int tempCol = col;

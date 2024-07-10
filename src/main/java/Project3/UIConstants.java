@@ -17,6 +17,7 @@ public class UIConstants {
     public static final Color CommentGrey         =  new Color(0x5c6370);
     public static final Color DarkBlueBackground  =  new Color(0x20293b);
     public static final Color Transparent         =  new Color(0, 0, 0, 0);
+    public static final Color SkyBlue                =  new Color(0xd3edea);
 
     public static final String fontFamily       = "Courier New";   
 }
