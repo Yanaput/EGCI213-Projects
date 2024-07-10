@@ -4,6 +4,8 @@ import org.w3c.dom.Text;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class AlgoPagePanelSettings extends JPanel {
     private static final String [] algorithms = {"BFS", "DFS", "Dijkstra", "A*", "MST"};
@@ -32,9 +34,33 @@ public class AlgoPagePanelSettings extends JPanel {
 
         AlgoPagePanelSettingsRow controlRow = new AlgoPagePanelSettingsRow(new FlowLayout(FlowLayout.CENTER));
             // Control algorithm buttons
-            controlRow.add(new ControlButton("Play / Pause"));
-            controlRow.add(new ControlButton("Step"));
-            controlRow.add(new ControlButton("Restart"));
+            ControlButton playButton = new ControlButton("Play / Pause");
+            playButton.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Play / Pause");
+                }
+            });
+            controlRow.add(playButton);
+            ControlButton stepButton = new ControlButton("Step");
+            stepButton.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Step");
+                }
+            });
+            controlRow.add(stepButton);
+            ControlButton restartButton = new ControlButton("Restart");
+            restartButton.addActionListener(new ActionListener(){
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("Restart");
+                }
+            });
+            controlRow.add(restartButton);
         this.add(controlRow);
     }
 }
