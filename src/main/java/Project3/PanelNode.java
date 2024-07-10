@@ -16,14 +16,12 @@ public class PanelNode extends JPanel{
     public static final int PATH     = 5;
     private final Color[] componentColours;
     private static final Color BLANK_COLOUR = UIConstants.GutterGrey;
-    private JPanel parent;
 
     private int nodeType = PanelNode.BLANK;
 
     private JLabel cost, heuristic;
 
-    public PanelNode(JPanel parent, int x, int y, int size, Color[] componentColours) {
-        this.parent = parent;
+    public PanelNode(int x, int y, int size, Color[] componentColours) {
         this.componentColours = componentColours;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(true);
@@ -51,44 +49,4 @@ public class PanelNode extends JPanel{
         this.setState(this.nodeType % 3 + 1);
     }
 
-
-//    @Override
-//    public void mouseClicked(MouseEvent e) {
-////        if (!isPointInNode(e.getX(), e.getY())) return;
-//
-//        switch(e.getButton()) {
-//            case MouseEvent.BUTTON3:
-//                this.setState(PanelNode.BLANK);
-//                break;
-//            case MouseEvent.BUTTON1:
-//                this.setState((this.nodeType + 1) % 4);
-//                break;
-//        }
-//
-//
-//
-//        System.out.printf("[%3d] [%3d] : [%d]\n", this.getX(), this.getY(), e.getButton());
-//    }
-//
-//    @Override
-//    public void mousePressed(MouseEvent e) {}
-//
-//    @Override
-//    public void mouseReleased(MouseEvent e) {}
-//
-//    @Override
-//    public void mouseEntered(MouseEvent e) {}
-//
-//    @Override
-//    public void mouseExited(MouseEvent e) {}
-//
-//    @Override
-//    public void mouseDragged(MouseEvent e) {
-//        parent.dispatchEvent(e);
-//    }
-//
-//    @Override
-//    public void mouseMoved(MouseEvent e) {
-//
-//    }
 }

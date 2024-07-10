@@ -36,7 +36,7 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
         panelNodes = new PanelNode[row][column];
         for(int i=0; i<row; i++) {
             for(int j=0; j<column; j++) {
-                panelNodes[i][j] = new PanelNode(this, horizontalOffset + j * this.nodeSize, verticalOffset + i * this.nodeSize, this.nodeSize - 1, componentColours);
+                panelNodes[i][j] = new PanelNode(horizontalOffset + j * this.nodeSize, verticalOffset + i * this.nodeSize, this.nodeSize - 1, componentColours);
                 this.add(panelNodes[i][j]);
             }
         }
