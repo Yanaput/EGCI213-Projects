@@ -26,7 +26,7 @@ public class SetUpMenuPanel extends JPanel {
     };
 
     private String[] pathFindComponents = {
-            "Wall", "Search", "Path", "Start", "Goal"
+            "Wall", "Start", "Goal", "Search", "Path"
     };
 
     private Color[] pathFindComponentsColors = new Color[pathFindComponents.length];

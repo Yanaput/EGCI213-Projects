@@ -2,14 +2,25 @@ package Project3;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class AlgoPagePanelSimulation extends JPanel {
-    private static final Color backgroundColour = new Color(0x20293b);
+public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListener, MouseListener {
+    private static final Color backgroundColour = UIConstants.DarkBlueBackground;
     private static final int padding = 10;
+
+    private int horizontalOffset;
+    private int verticalOffset;
+    private int column;
+    private int row;
+    private int nodeSize;
 
     private PanelNode [][] panelNodes;
 
-    public AlgoPagePanelSimulation(Dimension dimension, int row, int column){
+    public AlgoPagePanelSimulation(Dimension dimension, int row, int column, Color[] componentColours){
+        this.column = column;
+        this.row = row;
         this.setPreferredSize(dimension);
         this.setBackground(backgroundColour.darker());
         this.setLayout(null);
@@ -17,21 +28,70 @@ public class AlgoPagePanelSimulation extends JPanel {
         int horizontalSize = (dimension.width - 2 * padding) / column;
         int verticalSize = (dimension.height - 2 * padding) / row;
 
-        int size =  Math.min(horizontalSize, verticalSize);
+        this.nodeSize =  Math.min(horizontalSize, verticalSize);
 
-        int horizontalOffset = (dimension.width - size * column) / 2 + padding;
-        int verticalOffset = (dimension.height - size * row) / 2 + padding;
+        this.horizontalOffset = (dimension.width - this.nodeSize * column) / 2 + padding;
+        this.verticalOffset = (dimension.height - this.nodeSize * row) / 2 + padding;
 
         panelNodes = new PanelNode[row][column];
         for(int i=0; i<row; i++) {
             for(int j=0; j<column; j++) {
-                panelNodes[i][j] = new PanelNode(horizontalOffset + j * size, verticalOffset + i * size, size - 1);
+                panelNodes[i][j] = new PanelNode(this, horizontalOffset + j * this.nodeSize, verticalOffset + i * this.nodeSize, this.nodeSize - 1, componentColours);
                 this.add(panelNodes[i][j]);
             }
         }
+        this.addMouseListener(this);
+        this.addMouseMotionListener(this);
     }
 
     public Graph getGraph() {
         return null;
     }
+
+    private PanelNode getNodeAt(int x, int y) {
+        x -= this.horizontalOffset;
+        y -= this.verticalOffset;
+        x /= this.nodeSize; y /= this.nodeSize;
+//        System.out.printf("[%3d] [%3d]\n", x, y);
+        if (0 <= x && x < column && 0 <= y && y < row) return panelNodes[y][x];
+        return null;
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        int x = e.getX(), y = e.getY();
+        PanelNode node = getNodeAt(x, y);
+        if (node == null) return;
+        node.setState(SwingUtilities.isRightMouseButton(e) ? PanelNode.BLANK : PanelNode.WALL);
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {}
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int x = e.getX(), y = e.getY();
+        System.out.printf("[%3d] [%3d]\n", x, y);
+
+        PanelNode node = getNodeAt(x, y);
+        if (node == null) return;
+        System.out.println("Click");
+        if (SwingUtilities.isRightMouseButton(e)) {
+            node.setState(PanelNode.BLANK);
+        } else {
+            node.toggleState();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {}
+
+    @Override
+    public void mouseReleased(MouseEvent e) {}
+
+    @Override
+    public void mouseEntered(MouseEvent e) {}
+
+    @Override
+    public void mouseExited(MouseEvent e) {}
 }
