@@ -56,6 +56,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                         algorithm = (IAlgorithm) comboBox.getSelectedItem();
                         algorithm.setGraph(graph);
                         algorithm.reset();
+                        isPlaying = false;
                     }
                     isPlaying = !isPlaying;
                     System.out.println(graph);
@@ -74,6 +75,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                         algorithm = (IAlgorithm) comboBox.getSelectedItem();
                         algorithm.setGraph(graph);
                         algorithm.reset();
+                        isPlaying = false;
                     }
                     if (!isPlaying) algorithm.step();
                 }

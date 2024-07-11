@@ -83,6 +83,7 @@ public class BFS implements IAlgorithm {
         this.searched = new HashSet<PanelNode>();
         this.currentNode = graph.getRootNode();
         this.currentNode.setPrevious(null);
+        this.finished = false;
         queue.add(currentNode);
     }
 
