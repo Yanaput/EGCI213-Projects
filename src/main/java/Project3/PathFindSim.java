@@ -83,7 +83,7 @@ public class PathFindSim extends JFrame implements MouseListener {
             JOptionPane.showMessageDialog(this, UIConstants.creditsText, "Credits", JOptionPane.INFORMATION_MESSAGE);
         }
         else if(button.getText().equals("?")){
-            JOptionPane.showMessageDialog(this, UIConstants.howToPlayText, "Credits", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, UIConstants.howToPlayText, "How to play", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 

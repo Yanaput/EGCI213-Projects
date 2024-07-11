@@ -23,7 +23,7 @@ public class UIConstants {
 
 
     public static final String howToPlayText = "<html><body style='font-size:10px;'>" +
-            "<h1>How to Use</h1>" +
+            "<h1>How to play</h1>" +
             "<h2>1. Initial Setup</h2>" +
             "<h3>Grid Configuration:</h3>" +
             "<ul>" +
