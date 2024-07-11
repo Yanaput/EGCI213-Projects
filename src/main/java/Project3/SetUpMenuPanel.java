@@ -26,7 +26,7 @@ public class SetUpMenuPanel extends JPanel {
     };
 
     private String[] pathFindComponents = {
-            "Wall", "Start", "Goal", "Search", "Path"
+            "Wall", "Start", "Goal", "Search", "Searching", "Path"
     };
 
     private Color[] pathFindComponentsColors = new Color[pathFindComponents.length];
@@ -167,8 +167,9 @@ public class SetUpMenuPanel extends JPanel {
         toggleButtons[0][1].setSelected(true);
         toggleButtons[1][2].setSelected(true);
         toggleButtons[2][4].setSelected(true);
-        toggleButtons[3][5].setSelected(true);
-        toggleButtons[4][7].setSelected(true);
+        toggleButtons[3][6].setSelected(true);
+        toggleButtons[4][5].setSelected(true);
+        toggleButtons[5][7].setSelected(true);
 
         backButton = new JButton("Back");
         backButton.addMouseListener(new MouseAdapter() {

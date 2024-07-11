@@ -8,8 +8,8 @@ import java.awt.event.ActionListener;
 public class AlgoPagePanelSettings extends JPanel implements Runnable {
     private static final IAlgorithm [] algorithms = {new BFS(), new DFS(), new Dijkstra(), new AStar(), new BellmansFord()};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
-    private Graph graph;
-    private IAlgorithm algorithm;
+    private volatile Graph graph;
+    private volatile IAlgorithm algorithm;
 
     // Volatile to prevent compiler from removing this variable
     private volatile boolean isPlaying;
@@ -51,6 +51,8 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                     if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm) {
                         graph = simulationPanel.getGraph();
                         algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                        algorithm.setGraph(graph);
+                        algorithm.reset();
                     }
                     isPlaying = !isPlaying;
                     System.out.println(graph);
@@ -64,6 +66,12 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Step");
+                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm) {
+                        graph = simulationPanel.getGraph();
+                        algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                        algorithm.setGraph(graph);
+                        algorithm.reset();
+                    }
                     if (!isPlaying) algorithm.step();
                 }
             });
@@ -77,6 +85,8 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                     isPlaying = false;
                     graph = simulationPanel.getGraph();
                     algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                    algorithm.setGraph(graph);
+                    algorithm.reset();
                 }
             });
             controlRow.add(restartButton);
@@ -91,7 +101,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
             if (!isPlaying) continue;
 
             try {
-                Thread.sleep(100);
+                Thread.sleep(1);
                 this.algorithm.step();
             } catch (InterruptedException e) {
                 break;

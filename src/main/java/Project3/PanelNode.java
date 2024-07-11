@@ -13,7 +13,8 @@ public class PanelNode extends JPanel{
     public static final int START       = 2;
     public static final int GOAL        = 3;
     public static final int SEARCH      = 4;
-    public static final int PATH        = 5;
+    public static final int SEARCHING   = 5;
+    public static final int PATH        = 6;
 
     public static final int NORTHWEST   = 0;
     public static final int NORTH       = 1;
@@ -31,12 +32,17 @@ public class PanelNode extends JPanel{
     private int nodeType = PanelNode.BLANK;
     private int row, column;
 
+    private PanelNode previous;
+
     private JLabel cost, heuristic;
+
+    private PanelNodeConnection [] neighbours;
 
     public PanelNode(int x, int y, int column, int row , int size, Color[] componentColours) {
         this.column = column;
         this.row = row;
         this.componentColours = componentColours;
+        this.neighbours = new PanelNodeConnection[9];
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(true);
         this.setBackground(BLANK_COLOUR);
@@ -68,6 +74,19 @@ public class PanelNode extends JPanel{
 
     public void setNeighbour(PanelNode neighbour, int direction, boolean connected, int weight) {
         if (direction == PanelNode.CENTRE) return;
+        this.neighbours[direction] = new PanelNodeConnection(neighbour, connected, weight);
+    }
+
+    public PanelNodeConnection [] getNeighbours() {
+        return this.neighbours;
+    }
+
+    public void setPrevious(PanelNode previous) {
+        this.previous = previous;
+    }
+
+    public PanelNode getPrevious() {
+        return this.previous;
     }
 
     public int getRow() { return this.row; }
@@ -76,4 +95,7 @@ public class PanelNode extends JPanel{
 
     public int getNodeType() { return this.nodeType; }
 
+    public String toString() {
+        return "Panel [" + this.row + "] [" + this.column + "] (" + this.nodeType + ")";
+    }
 }

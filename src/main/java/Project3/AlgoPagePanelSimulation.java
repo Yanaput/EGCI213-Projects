@@ -44,6 +44,10 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
         this.addMouseMotionListener(this);
     }
 
+    private boolean isInBound(int row, int column) {
+        return 0 <= row && row < this.row && 0 <= column && column < this.column;
+    }
+
     public Graph getGraph() {
         Graph graph = new Graph(panelNodes);
         for(int i=0; i<this.row; i++) {
@@ -52,6 +56,29 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
                     graph.setStartPosition(i, j);
                 if (this.panelNodes[i][j].getNodeType() == PanelNode.GOAL)
                     graph.setDestinationPosition(i, j);
+                for (int ii=0; ii<=2; ii++) {
+                    for(int jj=0; jj<=2; jj++) {
+                        int direction = ii * 3 + jj;
+
+                        // If out of bound or centre
+//                        if (!isInBound(i + ii - 1, j + jj - 1) || direction == 4) {
+                        if (!isInBound(i + ii - 1, j + jj - 1) || direction % 2 == 0) {
+                            this.panelNodes[i][j].setNeighbour(null, direction, false, 0);
+                            continue;
+                        }
+                        PanelNode neighbourCell = this.panelNodes[i + ii - 1][j + jj - 1];
+
+                        // If neighbour is wall
+                        if (neighbourCell.getNodeType() == PanelNode.WALL) {
+                            this.panelNodes[i][j].setNeighbour(neighbourCell, direction, false, 0);
+                            continue;
+                        }
+
+                        // Other cases cost 14 diagonally, 10 horizontally and vertically
+                        // Will make it support diagonal if we have enough time
+                        this.panelNodes[i][j].setNeighbour(neighbourCell, direction, true, direction % 2 == 0 ? 14 : 10);
+                    }
+                }
             }
         }
         return graph;
