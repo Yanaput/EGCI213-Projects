@@ -17,7 +17,22 @@ public class NullAlgorithm implements IAlgorithm {
     }
 
     @Override
-    public String getName() {
+    public String toString() {
         return "NullAlgorithm";
+    }
+
+    @Override
+    public void setGraph(Graph graph) {
+
+    }
+
+    @Override
+    public void setStart(int row, int col) {
+
+    }
+
+    @Override
+    public void setDestination(int row, int col) {
+
     }
 }

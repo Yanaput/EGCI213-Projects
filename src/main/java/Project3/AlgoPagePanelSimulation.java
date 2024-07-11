@@ -66,12 +66,6 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
         return null;
     }
 
-    public void play() {}
-
-    public void step() {}
-
-    public void restart() {}
-
     @Override
     public void mouseDragged(MouseEvent e) {
         int x = e.getX(), y = e.getY();

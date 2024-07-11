@@ -1,18 +1,18 @@
 package Project3;
 
-import org.w3c.dom.Text;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class AlgoPagePanelSettings extends JPanel implements Runnable {
-    private static final String [] algorithms = {"BFS", "DFS", "Dijkstra", "A*", "MST"};
+    private static final IAlgorithm [] algorithms = {new BFS(), new DFS(), new Dijkstra(), new AStar(), new BellmansFord()};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
     private Graph graph;
     private IAlgorithm algorithm;
-    private boolean isPlaying;
+
+    // Volatile to prevent compiler from removing this variable
+    private volatile boolean isPlaying;
 
     public AlgoPagePanelSettings(AlgoPagePanelSimulation simulationPanel, Dimension dimension){
         this.setPreferredSize(dimension);
@@ -27,7 +27,8 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
             // Algorithm selection text
             algoRow.add(new TextLabel("Algorithm: "));
             // Algorithm selection combo box
-            algoRow.add(new SelectionComboBox<String> (algorithms));
+            SelectionComboBox<IAlgorithm> comboBox = new SelectionComboBox<IAlgorithm>(algorithms);
+            algoRow.add(comboBox);
         this.add(algoRow);
 
         AlgoPagePanelSettingsRow soundRow = new AlgoPagePanelSettingsRow(new GridLayout(1, 2));
@@ -47,9 +48,13 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Play / Pause");
-                    simulationPanel.play();
-                    graph = simulationPanel.getGraph();
+                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm) {
+                        graph = simulationPanel.getGraph();
+                        algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                    }
                     isPlaying = !isPlaying;
+                    System.out.println(graph);
+                    System.out.println(algorithm);
                 }
             });
             controlRow.add(playButton);
@@ -59,7 +64,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Step");
-                    simulationPanel.step();
+                    if (!isPlaying) algorithm.step();
                 }
             });
             controlRow.add(stepButton);
@@ -69,28 +74,25 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Restart");
-                    simulationPanel.restart();
+                    isPlaying = false;
+                    graph = simulationPanel.getGraph();
+                    algorithm = (IAlgorithm) comboBox.getSelectedItem();
                 }
             });
             controlRow.add(restartButton);
         this.add(controlRow);
     }
 
-    public boolean doNothing(boolean test) {
-        return test;
-    }
-
     @Override
     public void run() {
         while (true) {
 
-//            System.out.println(this.isPlaying);
-            doNothing(isPlaying);
+            // If paused, ignore the rest
             if (!isPlaying) continue;
 
             try {
                 Thread.sleep(100);
-                System.out.println("Test");
+                this.algorithm.step();
             } catch (InterruptedException e) {
                 break;
             }

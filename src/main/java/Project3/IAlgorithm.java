@@ -4,5 +4,8 @@ public interface IAlgorithm {
     public void step();
     public void reset();
     public boolean isFinished();
-    public String getName();
+    public String toString();
+    public void setGraph(Graph graph);
+    public void setStart(int row, int col);
+    public void setDestination(int row, int col);
 }

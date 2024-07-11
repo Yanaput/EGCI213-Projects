@@ -40,4 +40,8 @@ public class Graph {
     public int getDestinationColumn() {
         return destinationColumn;
     }
+
+    public PanelNode getGoalNode() {
+        return graph[destinationRow][destinationColumn];
+    }
 }
