@@ -72,7 +72,7 @@ public class PanelNode extends JPanel{
 
     public void setNeighbour(PanelNode neighbour, int direction, boolean connected, int weight) {
         if (direction == PanelNode.CENTRE) return;
-        this.neighbours[direction] = new PanelNodeConnection(neighbour, connected, weight);
+        this.neighbours[direction] = new PanelNodeConnection(this, neighbour, connected, weight);
     }
 
     public PanelNodeConnection [] getNeighbours() {
@@ -98,6 +98,8 @@ public class PanelNode extends JPanel{
 
     public int getHeuristic() { return heuristic; }
     public void setHeuristic(int heuristic) { this.heuristic = heuristic; this.heuristicLabel.setText("" + heuristic); }
+
+    public int getComputedHeuristicFunction() { return this.cost + this.heuristic; }
 
     public String toString() {
         return "Panel [" + this.row + "] [" + this.column + "] (" + this.cost + ")";
