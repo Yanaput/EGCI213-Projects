@@ -14,10 +14,8 @@ public class PathFindSim extends JFrame implements MouseListener {
     public static void main(String[] args) {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-        }
+        } catch (Exception e) {}
         new PathFindSim();
-//        new AlgoPage(25, 50);
     }
 
     public PathFindSim() {
@@ -69,40 +67,29 @@ public class PathFindSim extends JFrame implements MouseListener {
         aboutButton.setBounds((frameWidth - aboutButtonSize.width) / 2, 270, aboutButtonSize.width, aboutButtonSize.height);
         aboutButton.addMouseListener(this);
         panel.add(aboutButton);
-        panel.revalidate();
-        panel.repaint();
+
         setVisible(true);
     }
 
     @Override
     public void mouseClicked(MouseEvent e){
         JButton button = (JButton) e.getSource();
-        String creditsText = "<html><body style='font-size:10px;'>" +
-                "<table>" +
-                "<tr><td>Thanawat Vorayotsri</td><td>6480655</td></tr>" +
-                "<tr><td>Nazneen Khanmongkhol</td><td>6481267</td></tr>" +
-                "<tr><td>Mark Kittiphat Kuprasertwong</td><td>6481322</td></tr>" +
-                "<tr><td>Yanaput Makbonsonglop</td><td>6481145</td></tr>" +
-                "<tr><td>Thitirat Kulpornpaisarn</td><td>6580871</td></tr>" +
-                "</table>" +
-                "</body></html>";
-
 
         if(button.getText().equals("Start")){
             parentFrame.dispose();
             new SetUpMenu();
         }
         else if(button.getText().equals("Credits")){
-            JOptionPane.showMessageDialog(this, creditsText, "Credits", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, UIConstants.creditsText, "Credits", JOptionPane.INFORMATION_MESSAGE);
         }
         else if(button.getText().equals("?")){
-            JOptionPane.showMessageDialog(this, creditsText, "Credits", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, UIConstants.howToPlayText, "Credits", JOptionPane.INFORMATION_MESSAGE);
         }
     }
 
-    //--implement nothingg--//
     public void mousePressed(MouseEvent e) {}
     public void mouseReleased(MouseEvent e) {}
     public void mouseEntered(MouseEvent e) {}
     public void mouseExited(MouseEvent e) {}
+
 }

@@ -5,6 +5,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
 public class AlgoPagePanelSettings extends JPanel implements Runnable {
     private static final IAlgorithm [] algorithms = {new BFS(), new DFS(), new Dijkstra(), new AStar(), new BellmansFord()};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
@@ -13,6 +14,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
 
     private AlgoPagePanel parentPanel;
 
+    private boolean isReset = false;
     // Volatile to prevent compiler from removing this variable
     private volatile boolean isPlaying;
 
@@ -31,6 +33,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
             algoRow.add(new TextLabel("Algorithm: "));
             // Algorithm selection combo box
             SelectionComboBox<IAlgorithm> comboBox = new SelectionComboBox<IAlgorithm>(algorithms);
+            comboBox.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
             algoRow.add(comboBox);
         this.add(algoRow);
 
@@ -51,14 +54,23 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Play / Pause");
-                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm) {
+                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm || graph == null) {
                         graph = simulationPanel.getGraph();
-                        algorithm = (IAlgorithm) comboBox.getSelectedItem();
-                        algorithm.setGraph(graph);
-                        algorithm.reset();
-                        isPlaying = false;
+
+                        System.out.println("Here");
+                        if(graph != null) {
+                            algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                            algorithm.setGraph(graph);
+                            algorithm.reset();
+                            isPlaying = false;
+                        }
+                        else
+                            JOptionPane.showMessageDialog(parentPanel.getParentFrame(), "Incorrect Start and Destination",
+                                "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    isPlaying = !isPlaying;
+                    if(graph != null){
+                        isPlaying = !isPlaying;
+                    }
                     System.out.println(graph);
                     System.out.println(algorithm);
                 }
@@ -70,14 +82,21 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Step");
-                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm) {
+                    if (algorithm.isFinished() || comboBox.getSelectedItem() != algorithm || graph == null) {
                         graph = simulationPanel.getGraph();
-                        algorithm = (IAlgorithm) comboBox.getSelectedItem();
-                        algorithm.setGraph(graph);
-                        algorithm.reset();
-                        isPlaying = false;
+                        if(graph != null) {
+                            algorithm = (IAlgorithm) comboBox.getSelectedItem();
+                            algorithm.setGraph(graph);
+                            algorithm.reset();
+                            isPlaying = false;
+                        }
+                        else
+                            JOptionPane.showMessageDialog(parentPanel.getParentFrame(), "Incorrect Start and Destination",
+                                    "Error", JOptionPane.ERROR_MESSAGE);
                     }
-                    if (!isPlaying) algorithm.step();
+
+                    if (!isPlaying && graph != null)
+                        algorithm.step();
                 }
             });
             controlRow.add(stepButton);
@@ -92,6 +111,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                     algorithm = (IAlgorithm) comboBox.getSelectedItem();
                     algorithm.setGraph(graph);
                     algorithm.reset();
+                    graph = null;
                 }
             });
             controlRow.add(restartButton);

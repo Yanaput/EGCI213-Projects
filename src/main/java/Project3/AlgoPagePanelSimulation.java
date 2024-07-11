@@ -18,6 +18,7 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
 
     private PanelNode [][] panelNodes;
 
+
     public AlgoPagePanelSimulation(Dimension dimension, int row, int column, Color[] componentColours){
         this.column = column;
         this.row = row;
@@ -50,6 +51,8 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
 
     public Graph getGraph() {
         Graph graph = new Graph(panelNodes);
+        int startCount = 0;
+        int goalCount = 0;
         for(int i=0; i<this.row; i++) {
             for(int j=0; j<this.column; j++) {
                 PanelNode currentNode = this.panelNodes[i][j];
@@ -63,10 +66,14 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
                         currentNode.setState(currentNodeType);
                 }
                 currentNode.setPrevious(null);
-                if (currentNode.getNodeType() == PanelNode.START)
+                if (currentNode.getNodeType() == PanelNode.START){
+                    startCount++;
                     graph.setStartPosition(i, j);
-                if (currentNode.getNodeType() == PanelNode.GOAL)
+                }
+                if (currentNode.getNodeType() == PanelNode.GOAL){
+                    goalCount++;
                     graph.setDestinationPosition(i, j);
+                }
                 for (int ii=0; ii<=2; ii++) {
                     for(int jj=0; jj<=2; jj++) {
                         int direction = ii * 3 + jj;
@@ -92,7 +99,12 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
                 }
             }
         }
-        return graph;
+        System.out.println("startCount : " + startCount);
+        System.out.println("goalCount : "  + goalCount);
+        if(startCount == 1 && goalCount == 1 )
+            return graph;
+        else
+            return null;
     }
 
     private PanelNode getNodeAt(int x, int y) {

@@ -7,6 +7,8 @@ public class Graph {
     private int startRow, startColumn;
     private int destinationRow, destinationColumn;
 
+    private int startCount = 0, destinationCount = 0;
+
     public Graph(PanelNode [][] panelNodes) {
         this.graph = panelNodes;
     }
@@ -32,6 +34,28 @@ public class Graph {
         this.destinationRow = row;
         this.destinationColumn = col;
     }
+
+    public void incStart(){
+        this.startCount++;
+        System.out.println("inc start" + this.startCount);
+    }
+
+    public void decStart(){
+        this.startCount--;
+        System.out.println("dec start" + this.startCount);
+    }
+    public void incDestination(){
+        this.destinationCount++;
+        System.out.println("inc des" + this.destinationCount);
+    }
+
+    public void decDestination(){
+        this.destinationCount--;
+        System.out.println("dec des" + this.destinationCount);
+    }
+
+    public int getStartCount(){return this.startCount;}
+    public int getDestinationCount(){return this.destinationCount;}
 
     public int getDestinationRow() {
         return destinationRow;

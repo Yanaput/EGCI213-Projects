@@ -6,6 +6,6 @@ public class SelectionComboBox <T> extends JComboBox<T> {
     public SelectionComboBox(T [] t) {
         super(t);
         this.setBackground(UIConstants.DarkBlueBackground.brighter());
-        this.setForeground(UIConstants.White);
+        this.setForeground(UIConstants.DarkBlueBackground);
     }
 }

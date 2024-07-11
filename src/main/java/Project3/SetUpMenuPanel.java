@@ -42,12 +42,12 @@ public class SetUpMenuPanel extends JPanel {
         this.setBackground(UIConstants.SkyBlue);
         JLabel gridSizeLabel = new JLabel("Grid Size :");
         gridSizeLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
-        gridSizeLabel.setBounds(50, 50, 90, 30);
+        gridSizeLabel.setBounds(50, 30, 90, 30);
         this.add(gridSizeLabel);
 
         gridRows = new JTextArea(1, 8);
         gridRows.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 18));
-        gridRows.setBounds(130, 50, 100, 30);
+        gridRows.setBounds(130, 30, 100, 30);
         gridRows.setMargin(new Insets(5, 5, 5, 5));
         gridRows.addKeyListener(new KeyAdapter() {
             @Override
@@ -69,12 +69,12 @@ public class SetUpMenuPanel extends JPanel {
 
         JLabel rowsLabel = new JLabel("Rows");
         rowsLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
-        rowsLabel.setBounds(240, 50, 70, 30);
+        rowsLabel.setBounds(240, 30, 70, 30);
         this.add(rowsLabel);
 
         gridCols = new JTextArea(1, 8);
         gridCols.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 18));
-        gridCols.setBounds(350, 50, 100, 30);
+        gridCols.setBounds(350, 30, 100, 30);
         gridCols.setMargin(new Insets(5, 5, 5, 5));
         gridCols.addKeyListener(new KeyAdapter() {
             @Override
@@ -96,12 +96,12 @@ public class SetUpMenuPanel extends JPanel {
 
         JLabel colsLabel = new JLabel("Columns");
         colsLabel.setFont(gridSizeLabel.getFont().deriveFont(12f));
-        colsLabel.setBounds(460, 50, 70, 30);
+        colsLabel.setBounds(460, 30, 70, 30);
         this.add(colsLabel);
 
         JLabel colorsLabel = new JLabel("Colors : ");
         colorsLabel.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
-        colorsLabel.setBounds(50, 100, 70, 30);
+        colorsLabel.setBounds(50, 80, 70, 30);
         this.add(colorsLabel);
 
         ArrayList<JLabel> colorsLabels = new ArrayList<>();
@@ -114,7 +114,7 @@ public class SetUpMenuPanel extends JPanel {
         for (int i = 0; i < colorsLabels.size(); i++) {
             JLabel cl = colorsLabels.get(i);
             cl.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
-            cl.setBounds(90 + 30 * (i + 1), 100, 30, 30);
+            cl.setBounds(90 + 30 * (i + 1), 80, 30, 30);
             cl.setOpaque(true);
             this.add(colorsLabels.get(i));
         }
@@ -126,7 +126,7 @@ public class SetUpMenuPanel extends JPanel {
 
         for (int i = 0; i < pathFindLabels.size(); i++) {
             pathFindLabels.get(i).setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 12));
-            pathFindLabels.get(i).setBounds(50, 100 + 30 * (i + 1), 70, 30);
+            pathFindLabels.get(i).setBounds(50, 80 + 30 * (i + 1), 70, 30);
             this.add(pathFindLabels.get(i));
         }
 
@@ -135,7 +135,7 @@ public class SetUpMenuPanel extends JPanel {
                 toggleButtons[row][col] = new ColorRadioButton();
                 toggleButtons[row][col].setName(pathFindComponents[row]);
                 toggleButtons[row][col].setColor(colors[col]);
-                toggleButtons[row][col].setBounds(90 + 30 * (col + 1), 100 + 30 * (row + 1), 30, 30);
+                toggleButtons[row][col].setBounds(90 + 30 * (col + 1), 80 + 30 * (row + 1), 30, 30);
                 toggleButtons[row][col].setOpaque(false);
 
                 int tempRow = row;
