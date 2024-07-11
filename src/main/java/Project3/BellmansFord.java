@@ -40,7 +40,7 @@ public class BellmansFord implements IAlgorithm {
                     }
                     return;
                 }
-                System.out.printf("Relaxing %d from %d\n", i * row + j + 1, row * col);
+                System.out.printf("Relaxing %d from %d\n", i * col + j + 1, row * col);
                 j++; k=0;
                 return;
             }
