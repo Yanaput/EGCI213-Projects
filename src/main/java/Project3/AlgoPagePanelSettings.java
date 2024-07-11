@@ -7,14 +7,21 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class AlgoPagePanelSettings extends JPanel {
+public class AlgoPagePanelSettings extends JPanel implements Runnable {
     private static final String [] algorithms = {"BFS", "DFS", "Dijkstra", "A*", "MST"};
     private static final String [] themes = {"No sound", "Theme 1", "Theme 2", "Theme 3", "Theme 4"};
+    private Graph graph;
+    private IAlgorithm algorithm;
+    private boolean isPlaying;
 
     public AlgoPagePanelSettings(AlgoPagePanelSimulation simulationPanel, Dimension dimension){
         this.setPreferredSize(dimension);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(UIConstants.DarkBlueBackground.darker());
+        this.algorithm = new NullAlgorithm();
+        this.isPlaying = false;
+        Thread runThread = new Thread(this);
+        runThread.start();
 
         AlgoPagePanelSettingsRow algoRow = new AlgoPagePanelSettingsRow(new FlowLayout(FlowLayout.LEFT));
             // Algorithm selection text
@@ -41,6 +48,8 @@ public class AlgoPagePanelSettings extends JPanel {
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Play / Pause");
                     simulationPanel.play();
+                    graph = simulationPanel.getGraph();
+                    isPlaying = !isPlaying;
                 }
             });
             controlRow.add(playButton);
@@ -65,5 +74,26 @@ public class AlgoPagePanelSettings extends JPanel {
             });
             controlRow.add(restartButton);
         this.add(controlRow);
+    }
+
+    public boolean doNothing(boolean test) {
+        return test;
+    }
+
+    @Override
+    public void run() {
+        while (true) {
+
+//            System.out.println(this.isPlaying);
+            doNothing(isPlaying);
+            if (!isPlaying) continue;
+
+            try {
+                Thread.sleep(100);
+                System.out.println("Test");
+            } catch (InterruptedException e) {
+                break;
+            }
+        }
     }
 }

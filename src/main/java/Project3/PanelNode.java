@@ -29,10 +29,13 @@ public class PanelNode extends JPanel{
     private static final Color BLANK_COLOUR = UIConstants.GutterGrey;
 
     private int nodeType = PanelNode.BLANK;
+    private int row, column;
 
     private JLabel cost, heuristic;
 
-    public PanelNode(int x, int y, int size, Color[] componentColours) {
+    public PanelNode(int x, int y, int column, int row , int size, Color[] componentColours) {
+        this.column = column;
+        this.row = row;
         this.componentColours = componentColours;
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setOpaque(true);
@@ -66,5 +69,11 @@ public class PanelNode extends JPanel{
     public void setNeighbour(PanelNode neighbour, int direction, boolean connected, int weight) {
         if (direction == PanelNode.CENTRE) return;
     }
+
+    public int getRow() { return this.row; }
+
+    public int getColumn() { return this.column; }
+
+    public int getNodeType() { return this.nodeType; }
 
 }

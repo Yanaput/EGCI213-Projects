@@ -36,12 +36,25 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
         panelNodes = new PanelNode[row][column];
         for(int i=0; i<row; i++) {
             for(int j=0; j<column; j++) {
-                panelNodes[i][j] = new PanelNode(horizontalOffset + j * this.nodeSize, verticalOffset + i * this.nodeSize, this.nodeSize - 1, componentColours);
+                panelNodes[i][j] = new PanelNode(horizontalOffset + j * this.nodeSize, verticalOffset + i * this.nodeSize, j, i, this.nodeSize - 1, componentColours);
                 this.add(panelNodes[i][j]);
             }
         }
         this.addMouseListener(this);
         this.addMouseMotionListener(this);
+    }
+
+    public Graph getGraph() {
+        Graph graph = new Graph(panelNodes);
+        for(int i=0; i<this.row; i++) {
+            for(int j=0; j<this.column; j++) {
+                if (this.panelNodes[i][j].getNodeType() == PanelNode.START)
+                    graph.setStartPosition(i, j);
+                if (this.panelNodes[i][j].getNodeType() == PanelNode.GOAL)
+                    graph.setDestinationPosition(i, j);
+            }
+        }
+        return graph;
     }
 
     private PanelNode getNodeAt(int x, int y) {
