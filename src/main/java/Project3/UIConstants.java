@@ -25,7 +25,6 @@ public class UIConstants {
     public static final String howToPlayText = "<html><body style='font-size:10px;'>" +
             "<h1>How to play</h1>" +
             "<h2>1. Initial Setup</h2>" +
-            "<h3>Grid Configuration:</h3>" +
             "<ul>" +
             " <li>Fill the Grid Size Forms: Enter the desired dimensions for the grid.</li>" +
             " <li>Select Component Colors: Choose the colors for different components of the grid.</li>" +
@@ -34,7 +33,7 @@ public class UIConstants {
             "    <h2>2. Grid Customization</h2>" +
             "    <ul>" +
             "        <li>Select an algorithm to simulate.</li>" +
-            "        <li>Select sound simulation theme sound.</li>" +
+            "        <li>Select speed of the simulation.</li>" +
             "        <li>Create walls:" +
             "            <ul>" +
             "                <li>Drag on the Grid: Drag to draw walls on the grid, representing obstacles.</li>" +
