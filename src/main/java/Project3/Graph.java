@@ -68,4 +68,6 @@ public class Graph {
     public PanelNode getGoalNode() {
         return graph[destinationRow][destinationColumn];
     }
+
+    public PanelNode[][] getArray() {return this.graph;}
 }
