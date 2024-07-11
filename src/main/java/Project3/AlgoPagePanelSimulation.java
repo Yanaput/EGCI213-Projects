@@ -101,6 +101,15 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
                 }
             }
         }
+
+        for(int i=0; i<row; i++) {
+            for(int j=0; j<column; j++) {
+                PanelNode currentNode = this.panelNodes[i][j];
+                int dy = currentNode.getRow() - graph.getDestinationRow(), dx = currentNode.getColumn() - graph.getDestinationColumn();
+                currentNode.setHeuristic((int) Math.sqrt(dx*dx + dy*dy));
+            }
+        }
+
         System.out.println("startCount : " + startCount);
         System.out.println("goalCount : "  + goalCount);
         if(startCount == 1 && goalCount == 1 )

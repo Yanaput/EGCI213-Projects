@@ -97,7 +97,7 @@ public class PanelNode extends JPanel{
     public void setCost(int cost) { this.cost = cost; this.costLabel.setText(cost == Integer.MAX_VALUE ? "inf" : ("" + cost));}
 
     public int getHeuristic() { return heuristic; }
-    public void setHeuristic(int heuristic) { this.heuristic = heuristic; }
+    public void setHeuristic(int heuristic) { this.heuristic = heuristic; this.heuristicLabel.setText("" + heuristic); }
 
     public String toString() {
         return "Panel [" + this.row + "] [" + this.column + "] (" + this.cost + ")";
