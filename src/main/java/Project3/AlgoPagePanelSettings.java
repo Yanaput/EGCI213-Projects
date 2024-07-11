@@ -51,12 +51,12 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 public void valueChanged(ListSelectionEvent e) {
                     if(!e.getValueIsAdjusting()) {
                         speedDelay = switch (speedList.getSelectedValue()) {
-                            case "80%"->15;
-                            case "60%"->25;
-                            case "40%"->60;
+                            case "80%"->25;
+                            case "60%"->33;
+                            case "40%"->50;
                             case "20%"->100;
                             case "10%"->200;
-                            default -> 10;
+                            default -> 1;
                         };
                     }
                 }
