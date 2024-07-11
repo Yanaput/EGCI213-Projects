@@ -8,8 +8,6 @@ import java.util.HashSet;
 
 public class BFS implements IAlgorithm {
     private Graph graph;
-    private int startRow, startColumn;
-    private int destinationRow, destinationColumn;
     private boolean finished = false;
 
     private Queue<PanelNode> queue;
@@ -17,8 +15,7 @@ public class BFS implements IAlgorithm {
     private Set<PanelNode> searched;
     private PanelNode currentNode;
 
-    public BFS() {
-    }
+    public BFS() {}
 
     @Override
     public void step() {
@@ -65,8 +62,8 @@ public class BFS implements IAlgorithm {
         for(PanelNodeConnection p : currentNode.getNeighbours()) {
             if (p == null || !p.isConnected()) continue;
             PanelNode pt = p.getPanelNode();
-            System.out.println("Neighbour: " + pt);
-            if (pt == null || visited.contains(pt)) continue;
+//            System.out.println("Neighbour: " + pt);
+            if (pt == null || visited.contains(pt) || searched.contains(pt)) continue;
             pt.setPrevious(currentNode);
             if (pt != graph.getGoalNode() && pt != graph.getRootNode())
                 pt.setState(PanelNode.SEARCHING);
@@ -103,14 +100,8 @@ public class BFS implements IAlgorithm {
     }
 
     @Override
-    public void setStart(int row, int col) {
-        this.startRow = row;
-        this.startColumn = col;
-    }
+    public void setStart(int row, int col) {}
 
     @Override
-    public void setDestination(int row, int col) {
-        this.destinationRow = row;
-        this.destinationColumn = col;
-    }
+    public void setDestination(int row, int col) {}
 }
