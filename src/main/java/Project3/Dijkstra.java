@@ -27,14 +27,10 @@ public class Dijkstra implements IAlgorithm {
 
         if (currentNode == null) return;
 
-//        while (currentNode.getCost() < ) {
-//
-//        }
-
         for(PanelNodeConnection p : currentNode.getNeighbours()) {
             if (p == null || !p.isConnected()) continue;
             PanelNode pt = p.getPanelNode();
-//            System.out.println("Neighbour: " + pt);
+
             if (pt == null || currentNode.getCost() + p.getWeight() > pt.getCost()) continue;
             pt.setCost(currentNode.getCost() + p.getWeight());
             pt.setPrevious(currentNode);
@@ -78,7 +74,7 @@ public class Dijkstra implements IAlgorithm {
 
     @Override
     public boolean isFinished() {
-        return false;
+        return this.finished;
     }
 
     @Override
