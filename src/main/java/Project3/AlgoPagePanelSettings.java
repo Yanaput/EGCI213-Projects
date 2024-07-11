@@ -11,10 +11,13 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
     private volatile Graph graph;
     private volatile IAlgorithm algorithm;
 
+    private AlgoPagePanel parentPanel;
+
     // Volatile to prevent compiler from removing this variable
     private volatile boolean isPlaying;
 
-    public AlgoPagePanelSettings(AlgoPagePanelSimulation simulationPanel, Dimension dimension){
+    public AlgoPagePanelSettings(AlgoPagePanelSimulation simulationPanel, Dimension dimension, AlgoPagePanel parentPanel){
+        this.parentPanel = parentPanel;
         this.setPreferredSize(dimension);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(UIConstants.DarkBlueBackground.darker());
@@ -91,6 +94,17 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
             });
             controlRow.add(restartButton);
         this.add(controlRow);
+        JButton backButton = new JButton("Back");
+        backButton.setFont(new Font(UIConstants.fontFamily, Font.PLAIN, 16));
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Back");
+                parentPanel.getParentFrame().dispose();
+                new SetUpMenu();
+            }
+        });
+        this.add(backButton);
     }
 
     @Override

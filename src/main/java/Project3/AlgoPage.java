@@ -22,7 +22,7 @@ public class AlgoPage extends JFrame {
        this.setLocation(0, 0);
        this.setSize(pageSize);
        this.setResizable(false);
-       this.add(new AlgoPagePanel(pageSize, row, columns, componentColours));
+       this.add(new AlgoPagePanel(pageSize, row, columns, componentColours, this));
        this.setVisible(true);
    }
 

@@ -147,11 +147,15 @@ public class SetUpMenuPanel extends JPanel {
                             System.out.println(toggleButtons[tempRow][tempCol].getName() + ": " + toggleButtons[tempRow][tempCol].getColor());
                             for (int i = 0; i < pathFindComponents.length; i++) {
                                 toggleButtons[i][tempCol].setSelected(i == tempRow);
+
                             }
                             for (int j = 0; j < colors.length; j++) {
                                 toggleButtons[tempRow][j].setSelected(j == tempCol);
                             }
                             pathFindComponentsColors[tempRow] = toggleButtons[tempRow][tempCol].getColor();
+                        }
+                        if(e.getStateChange() == ItemEvent.DESELECTED){
+                            pathFindComponentsColors[tempRow] = null;
                         }
                     }
                 });
@@ -198,11 +202,11 @@ public class SetUpMenuPanel extends JPanel {
                 }
                 else if(rowsCount == 0 || colsCount == 0)
                     JOptionPane.showMessageDialog(parentFrame, "Incorrect grid size",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
 
                 else if(!validateComponentsColors(pathFindComponentsColors))
                     JOptionPane.showMessageDialog(parentFrame, "Please select all color of components",
-                            "Error", JOptionPane.INFORMATION_MESSAGE);
+                            "Error", JOptionPane.ERROR_MESSAGE);
 
                 System.out.println("Next");
             }
@@ -216,7 +220,7 @@ public class SetUpMenuPanel extends JPanel {
         String text = textArea.getText();
         if (!text.matches("\\d*")) {
             JOptionPane.showMessageDialog(this, "Incorrect Data Type!\nNumbers Only!",
-                    "Error", JOptionPane.INFORMATION_MESSAGE);
+                    "Error", JOptionPane.ERROR_MESSAGE);
             textArea.setText(text.replaceAll("\\D", ""));
         }
     }
