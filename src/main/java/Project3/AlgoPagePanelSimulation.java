@@ -65,10 +65,12 @@ public class AlgoPagePanelSimulation extends JPanel implements MouseMotionListen
                     default:
                         currentNode.setState(currentNodeType);
                 }
+                currentNode.setCost(Integer.MAX_VALUE);
                 currentNode.setPrevious(null);
                 if (currentNode.getNodeType() == PanelNode.START){
                     startCount++;
                     graph.setStartPosition(i, j);
+                    currentNode.setCost(0);
                 }
                 if (currentNode.getNodeType() == PanelNode.GOAL){
                     goalCount++;

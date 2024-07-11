@@ -2,9 +2,6 @@ package Project3;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 
 public class PanelNode extends JPanel{
 
@@ -34,7 +31,8 @@ public class PanelNode extends JPanel{
 
     private PanelNode previous;
 
-    private JLabel cost, heuristic;
+    private JLabel costLabel, heuristicLabel;
+    private int cost, heuristic;
 
     private PanelNodeConnection [] neighbours;
 
@@ -49,15 +47,15 @@ public class PanelNode extends JPanel{
         this.setBounds(x, y, size, size);
         this.setState(PanelNode.BLANK);
 
-        this.cost = new JLabel("0");
-        this.heuristic = new JLabel("(0)");
-        this.cost.setForeground(UIConstants.White);
-        this.heuristic.setForeground(UIConstants.White);
-        this.cost.setFont(new Font(UIConstants.fontFamily, Font.BOLD, size / 3));
-        this.heuristic.setFont(new Font(UIConstants.fontFamily, Font.BOLD, size / 7));
+        this.costLabel = new JLabel("0");
+        this.heuristicLabel = new JLabel("(0)");
+        this.costLabel.setForeground(UIConstants.White);
+        this.heuristicLabel.setForeground(UIConstants.White);
+        this.costLabel.setFont(new Font(UIConstants.fontFamily, Font.BOLD, size / 3));
+        this.heuristicLabel.setFont(new Font(UIConstants.fontFamily, Font.BOLD, size / 7));
 
-        this.add(cost);
-        this.add(heuristic);
+        this.add(costLabel);
+        this.add(heuristicLabel);
     }
 
     public void setState(int state) {
@@ -95,7 +93,14 @@ public class PanelNode extends JPanel{
 
     public int getNodeType() { return this.nodeType; }
 
+    public int getCost() { return cost; }
+    public void setCost(int cost) { this.cost = cost; this.costLabel.setText(cost == Integer.MAX_VALUE ? "inf" : ("" + cost));}
+
+    public int getHeuristic() { return heuristic; }
+    public void setHeuristic(int heuristic) { this.heuristic = heuristic; }
+
     public String toString() {
-        return "Panel [" + this.row + "] [" + this.column + "] (" + this.nodeType + ")";
+        return "Panel [" + this.row + "] [" + this.column + "] (" + this.cost + ")";
     }
+
 }
