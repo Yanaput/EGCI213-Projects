@@ -137,8 +137,8 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
             if (!isPlaying) continue;
 
             try {
-                Thread.sleep(1);
                 this.algorithm.step();
+                Thread.sleep(1);
             } catch (InterruptedException e) {
                 break;
             }
