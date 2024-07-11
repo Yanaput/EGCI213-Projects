@@ -11,14 +11,10 @@ public class PathFindSim extends JFrame implements MouseListener {
 
     private JLabel contentPane;
 
-    public static void main(String[] args) {
+    public PathFindSim() {
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
         } catch (Exception e) {}
-        new PathFindSim();
-    }
-
-    public PathFindSim() {
         parentFrame = this;
         this.setResizable(false);
         setTitle("PathFindSim");
