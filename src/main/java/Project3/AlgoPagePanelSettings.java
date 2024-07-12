@@ -69,7 +69,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
 
         AlgoPagePanelSettingsRow controlRow = new AlgoPagePanelSettingsRow(new FlowLayout(FlowLayout.CENTER));
             // Control algorithm buttons
-            ControlButton playButton = new ControlButton("Play / Pause");
+            JButton playButton = new JButton("Play / Pause");
             playButton.addActionListener(new ActionListener(){
 
                 @Override
@@ -97,7 +97,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 }
             });
             controlRow.add(playButton);
-            ControlButton stepButton = new ControlButton("Step");
+            JButton stepButton = new JButton("Step");
             stepButton.addActionListener(new ActionListener(){
 
                 @Override
@@ -121,7 +121,7 @@ public class AlgoPagePanelSettings extends JPanel implements Runnable {
                 }
             });
             controlRow.add(stepButton);
-            ControlButton restartButton = new ControlButton("Restart");
+            JButton restartButton = new JButton("Restart");
             restartButton.addActionListener(new ActionListener(){
 
                 @Override
